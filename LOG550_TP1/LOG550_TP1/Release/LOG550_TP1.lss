@@ -1,0 +1,508 @@
+
+LOG550_TP1.elf:     file format elf32-avr32
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .reset        00002008  80000000  80000000  00000400  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rela.got     00000000  80002008  80002008  00002408  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .text         0000023c  80002008  80002008  00002408  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .exception    00000200  80002400  80002400  00002800  2**9
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .rodata       00000110  80002600  80002600  00002a00  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .dalign       00000004  00000004  00000004  00000000  2**0
+                  ALLOC
+  6 .bss          000000f0  00000008  00000008  00000000  2**2
+                  ALLOC
+  7 .heap         0000ef08  000000f8  000000f8  00000000  2**0
+                  ALLOC
+  8 .comment      00000030  00000000  00000000  00002b10  2**0
+                  CONTENTS, READONLY
+  9 .debug_frame  000002b0  00000000  00000000  00002b40  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .stack        00001000  0000f000  0000f000  00000000  2**0
+                  ALLOC
+
+Disassembly of section .reset:
+
+80000000 <_start>:
+80000000:	fe cf de 00 	sub	pc,pc,-8704
+
+80000004 <_trampoline>:
+80000004:	e0 8f 10 00 	bral	80002004 <program_start>
+	...
+
+80002004 <program_start>:
+80002004:	fe cf fe 04 	sub	pc,pc,-508
+
+Disassembly of section .text:
+
+80002008 <board_init>:
+80002008:	d4 01       	pushm	lr
+8000200a:	30 3b       	mov	r11,3
+8000200c:	33 bc       	mov	r12,59
+8000200e:	c7 fc       	rcall	8000210c <gpio_configure_pin>
+80002010:	30 3b       	mov	r11,3
+80002012:	33 cc       	mov	r12,60
+80002014:	c7 cc       	rcall	8000210c <gpio_configure_pin>
+80002016:	30 3b       	mov	r11,3
+80002018:	33 dc       	mov	r12,61
+8000201a:	c7 9c       	rcall	8000210c <gpio_configure_pin>
+8000201c:	30 3b       	mov	r11,3
+8000201e:	33 ec       	mov	r12,62
+80002020:	c7 6c       	rcall	8000210c <gpio_configure_pin>
+80002022:	30 3b       	mov	r11,3
+80002024:	33 3c       	mov	r12,51
+80002026:	c7 3c       	rcall	8000210c <gpio_configure_pin>
+80002028:	30 3b       	mov	r11,3
+8000202a:	33 4c       	mov	r12,52
+8000202c:	c7 0c       	rcall	8000210c <gpio_configure_pin>
+8000202e:	30 3b       	mov	r11,3
+80002030:	33 5c       	mov	r12,53
+80002032:	c6 dc       	rcall	8000210c <gpio_configure_pin>
+80002034:	30 3b       	mov	r11,3
+80002036:	33 6c       	mov	r12,54
+80002038:	c6 ac       	rcall	8000210c <gpio_configure_pin>
+8000203a:	30 0b       	mov	r11,0
+8000203c:	35 8c       	mov	r12,88
+8000203e:	c6 7c       	rcall	8000210c <gpio_configure_pin>
+80002040:	30 0b       	mov	r11,0
+80002042:	35 5c       	mov	r12,85
+80002044:	c6 4c       	rcall	8000210c <gpio_configure_pin>
+80002046:	30 0b       	mov	r11,0
+80002048:	35 2c       	mov	r12,82
+8000204a:	c6 1c       	rcall	8000210c <gpio_configure_pin>
+8000204c:	30 0b       	mov	r11,0
+8000204e:	31 4c       	mov	r12,20
+80002050:	c5 ec       	rcall	8000210c <gpio_configure_pin>
+80002052:	30 0b       	mov	r11,0
+80002054:	31 9c       	mov	r12,25
+80002056:	c5 bc       	rcall	8000210c <gpio_configure_pin>
+80002058:	30 0b       	mov	r11,0
+8000205a:	31 ac       	mov	r12,26
+8000205c:	c5 8c       	rcall	8000210c <gpio_configure_pin>
+8000205e:	30 0b       	mov	r11,0
+80002060:	31 bc       	mov	r12,27
+80002062:	c5 5c       	rcall	8000210c <gpio_configure_pin>
+80002064:	30 4b       	mov	r11,4
+80002066:	fe cc fa 26 	sub	r12,pc,-1498
+8000206a:	c4 1c       	rcall	800020ec <gpio_enable_module>
+8000206c:	30 4b       	mov	r11,4
+8000206e:	fe cc fa 6e 	sub	r12,pc,-1426
+80002072:	c3 dc       	rcall	800020ec <gpio_enable_module>
+80002074:	30 0b       	mov	r11,0
+80002076:	30 2c       	mov	r12,2
+80002078:	c4 ac       	rcall	8000210c <gpio_configure_pin>
+8000207a:	30 0b       	mov	r11,0
+8000207c:	30 7c       	mov	r12,7
+8000207e:	c4 7c       	rcall	8000210c <gpio_configure_pin>
+80002080:	30 2b       	mov	r11,2
+80002082:	fe cc fa 52 	sub	r12,pc,-1454
+80002086:	c3 3c       	rcall	800020ec <gpio_enable_module>
+80002088:	30 2b       	mov	r11,2
+8000208a:	fe cc fa 6a 	sub	r12,pc,-1430
+8000208e:	c2 fc       	rcall	800020ec <gpio_enable_module>
+80002090:	30 2b       	mov	r11,2
+80002092:	fe cc fa 32 	sub	r12,pc,-1486
+80002096:	c2 bc       	rcall	800020ec <gpio_enable_module>
+80002098:	d8 02       	popm	pc
+8000209a:	d7 03       	nop
+
+8000209c <gpio_enable_module_pin>:
+8000209c:	f8 08 16 05 	lsr	r8,r12,0x5
+800020a0:	a9 68       	lsl	r8,0x8
+800020a2:	e0 28 f0 00 	sub	r8,61440
+800020a6:	58 1b       	cp.w	r11,1
+800020a8:	c0 d0       	breq	800020c2 <gpio_enable_module_pin+0x26>
+800020aa:	c0 63       	brcs	800020b6 <gpio_enable_module_pin+0x1a>
+800020ac:	58 2b       	cp.w	r11,2
+800020ae:	c0 f0       	breq	800020cc <gpio_enable_module_pin+0x30>
+800020b0:	58 3b       	cp.w	r11,3
+800020b2:	c1 20       	breq	800020d6 <gpio_enable_module_pin+0x3a>
+800020b4:	5e ff       	retal	1
+800020b6:	30 19       	mov	r9,1
+800020b8:	f2 0c 09 49 	lsl	r9,r9,r12
+800020bc:	91 69       	st.w	r8[0x18],r9
+800020be:	91 a9       	st.w	r8[0x28],r9
+800020c0:	c1 08       	rjmp	800020e0 <gpio_enable_module_pin+0x44>
+800020c2:	f6 0c 09 4b 	lsl	r11,r11,r12
+800020c6:	91 5b       	st.w	r8[0x14],r11
+800020c8:	91 ab       	st.w	r8[0x28],r11
+800020ca:	c0 b8       	rjmp	800020e0 <gpio_enable_module_pin+0x44>
+800020cc:	30 19       	mov	r9,1
+800020ce:	f2 0c 09 49 	lsl	r9,r9,r12
+800020d2:	91 69       	st.w	r8[0x18],r9
+800020d4:	c0 58       	rjmp	800020de <gpio_enable_module_pin+0x42>
+800020d6:	30 19       	mov	r9,1
+800020d8:	f2 0c 09 49 	lsl	r9,r9,r12
+800020dc:	91 59       	st.w	r8[0x14],r9
+800020de:	91 99       	st.w	r8[0x24],r9
+800020e0:	30 19       	mov	r9,1
+800020e2:	f2 0c 09 4c 	lsl	r12,r9,r12
+800020e6:	91 2c       	st.w	r8[0x8],r12
+800020e8:	5e fd       	retal	0
+800020ea:	d7 03       	nop
+
+800020ec <gpio_enable_module>:
+800020ec:	d4 21       	pushm	r4-r7,lr
+800020ee:	30 07       	mov	r7,0
+800020f0:	18 96       	mov	r6,r12
+800020f2:	16 94       	mov	r4,r11
+800020f4:	0e 95       	mov	r5,r7
+800020f6:	c0 78       	rjmp	80002104 <gpio_enable_module+0x18>
+800020f8:	6c 1b       	ld.w	r11,r6[0x4]
+800020fa:	6c 0c       	ld.w	r12,r6[0x0]
+800020fc:	2f f7       	sub	r7,-1
+800020fe:	2f 86       	sub	r6,-8
+80002100:	cc ef       	rcall	8000209c <gpio_enable_module_pin>
+80002102:	18 45       	or	r5,r12
+80002104:	08 37       	cp.w	r7,r4
+80002106:	cf 93       	brcs	800020f8 <gpio_enable_module+0xc>
+80002108:	0a 9c       	mov	r12,r5
+8000210a:	d8 22       	popm	r4-r7,pc
+
+8000210c <gpio_configure_pin>:
+8000210c:	f8 08 16 05 	lsr	r8,r12,0x5
+80002110:	16 9a       	mov	r10,r11
+80002112:	a9 68       	lsl	r8,0x8
+80002114:	e2 1a 00 04 	andl	r10,0x4,COH
+80002118:	e0 28 f0 00 	sub	r8,61440
+8000211c:	f3 dc c0 05 	bfextu	r9,r12,0x0,0x5
+80002120:	58 0a       	cp.w	r10,0
+80002122:	c0 70       	breq	80002130 <gpio_configure_pin+0x24>
+80002124:	30 1a       	mov	r10,1
+80002126:	f4 09 09 49 	lsl	r9,r10,r9
+8000212a:	f1 49 00 74 	st.w	r8[116],r9
+8000212e:	c0 68       	rjmp	8000213a <gpio_configure_pin+0x2e>
+80002130:	30 1a       	mov	r10,1
+80002132:	f4 09 09 49 	lsl	r9,r10,r9
+80002136:	f1 49 00 78 	st.w	r8[120],r9
+8000213a:	ed bb 00 07 	bld	r11,0x7
+8000213e:	c2 21       	brne	80002182 <gpio_configure_pin+0x76>
+80002140:	16 99       	mov	r9,r11
+80002142:	e2 19 01 80 	andl	r9,0x180,COH
+80002146:	c0 70       	breq	80002154 <gpio_configure_pin+0x48>
+80002148:	30 19       	mov	r9,1
+8000214a:	f2 0c 09 49 	lsl	r9,r9,r12
+8000214e:	f1 49 00 a8 	st.w	r8[168],r9
+80002152:	c0 a8       	rjmp	80002166 <gpio_configure_pin+0x5a>
+80002154:	16 99       	mov	r9,r11
+80002156:	e2 19 02 80 	andl	r9,0x280,COH
+8000215a:	c0 90       	breq	8000216c <gpio_configure_pin+0x60>
+8000215c:	30 19       	mov	r9,1
+8000215e:	f2 0c 09 49 	lsl	r9,r9,r12
+80002162:	f1 49 00 a4 	st.w	r8[164],r9
+80002166:	f1 49 00 b8 	st.w	r8[184],r9
+8000216a:	c0 c8       	rjmp	80002182 <gpio_configure_pin+0x76>
+8000216c:	16 99       	mov	r9,r11
+8000216e:	e2 19 03 80 	andl	r9,0x380,COH
+80002172:	c0 80       	breq	80002182 <gpio_configure_pin+0x76>
+80002174:	30 19       	mov	r9,1
+80002176:	f2 0c 09 49 	lsl	r9,r9,r12
+8000217a:	f1 49 00 a8 	st.w	r8[168],r9
+8000217e:	f1 49 00 b4 	st.w	r8[180],r9
+80002182:	ed bb 00 00 	bld	r11,0x0
+80002186:	c1 81       	brne	800021b6 <gpio_configure_pin+0xaa>
+80002188:	e2 1b 00 02 	andl	r11,0x2,COH
+8000218c:	f3 dc c0 05 	bfextu	r9,r12,0x0,0x5
+80002190:	58 0b       	cp.w	r11,0
+80002192:	c0 70       	breq	800021a0 <gpio_configure_pin+0x94>
+80002194:	30 1a       	mov	r10,1
+80002196:	f4 09 09 49 	lsl	r9,r10,r9
+8000219a:	f1 49 00 54 	st.w	r8[84],r9
+8000219e:	c0 68       	rjmp	800021aa <gpio_configure_pin+0x9e>
+800021a0:	30 1a       	mov	r10,1
+800021a2:	f4 09 09 49 	lsl	r9,r10,r9
+800021a6:	f1 49 00 58 	st.w	r8[88],r9
+800021aa:	30 19       	mov	r9,1
+800021ac:	f2 0c 09 49 	lsl	r9,r9,r12
+800021b0:	f1 49 00 44 	st.w	r8[68],r9
+800021b4:	c0 68       	rjmp	800021c0 <gpio_configure_pin+0xb4>
+800021b6:	30 19       	mov	r9,1
+800021b8:	f2 0c 09 49 	lsl	r9,r9,r12
+800021bc:	f1 49 00 48 	st.w	r8[72],r9
+800021c0:	30 19       	mov	r9,1
+800021c2:	f2 0c 09 4c 	lsl	r12,r9,r12
+800021c6:	91 1c       	st.w	r8[0x4],r12
+800021c8:	5e fc       	retal	r12
+800021ca:	d7 03       	nop
+
+800021cc <_get_interrupt_handler>:
+800021cc:	e0 68 00 83 	mov	r8,131
+800021d0:	fe 79 08 00 	mov	r9,-63488
+800021d4:	f0 0c 01 0c 	sub	r12,r8,r12
+800021d8:	f2 0c 03 28 	ld.w	r8,r9[r12<<0x2]
+800021dc:	f0 ca ff c0 	sub	r10,r8,-64
+800021e0:	f2 0a 03 2c 	ld.w	r12,r9[r10<<0x2]
+800021e4:	58 0c       	cp.w	r12,0
+800021e6:	5e 0c       	reteq	r12
+800021e8:	fe c9 fb 78 	sub	r9,pc,-1160
+800021ec:	f8 0c 12 00 	clz	r12,r12
+800021f0:	f2 08 00 38 	add	r8,r9,r8<<0x3
+800021f4:	f8 0c 11 1f 	rsub	r12,r12,31
+800021f8:	70 18       	ld.w	r8,r8[0x4]
+800021fa:	f0 0c 03 2c 	ld.w	r12,r8[r12<<0x2]
+800021fe:	5e fc       	retal	r12
+
+80002200 <_stext>:
+80002200:	e0 7d 00 00 	mov	sp,65536
+80002204:	fe c0 fe 04 	sub	r0,pc,-508
+80002208:	e3 b0 00 01 	mtsr	0x4,r0
+8000220c:	d5 53       	csrf	0x15
+8000220e:	30 80       	mov	r0,8
+80002210:	30 81       	mov	r1,8
+80002212:	02 30       	cp.w	r0,r1
+80002214:	c0 72       	brcc	80002222 <idata_load_loop_end>
+80002216:	fe c2 fb 06 	sub	r2,pc,-1274
+
+8000221a <idata_load_loop>:
+8000221a:	a5 05       	ld.d	r4,r2++
+8000221c:	a1 24       	st.d	r0++,r4
+8000221e:	02 30       	cp.w	r0,r1
+80002220:	cf d3       	brcs	8000221a <idata_load_loop>
+
+80002222 <idata_load_loop_end>:
+80002222:	30 80       	mov	r0,8
+80002224:	e0 61 00 f8 	mov	r1,248
+80002228:	02 30       	cp.w	r0,r1
+8000222a:	c0 62       	brcc	80002236 <udata_clear_loop_end>
+8000222c:	30 02       	mov	r2,0
+8000222e:	30 03       	mov	r3,0
+
+80002230 <udata_clear_loop>:
+80002230:	a1 22       	st.d	r0++,r2
+80002232:	02 30       	cp.w	r0,r1
+80002234:	cf e3       	brcs	80002230 <udata_clear_loop>
+
+80002236 <udata_clear_loop_end>:
+80002236:	fe cf ff fa 	sub	pc,pc,-6
+8000223a:	d7 03       	nop
+
+8000223c <main>:
+8000223c:	d4 01       	pushm	lr
+8000223e:	ce 5e       	rcall	80002008 <board_init>
+80002240:	d8 0a       	popm	pc,r12=0
+80002242:	d7 03       	nop
+
+Disassembly of section .exception:
+
+80002400 <_evba>:
+80002400:	c0 08       	rjmp	80002400 <_evba>
+	...
+
+80002404 <_handle_TLB_Multiple_Hit>:
+80002404:	c0 08       	rjmp	80002404 <_handle_TLB_Multiple_Hit>
+	...
+
+80002408 <_handle_Bus_Error_Data_Fetch>:
+80002408:	c0 08       	rjmp	80002408 <_handle_Bus_Error_Data_Fetch>
+	...
+
+8000240c <_handle_Bus_Error_Instruction_Fetch>:
+8000240c:	c0 08       	rjmp	8000240c <_handle_Bus_Error_Instruction_Fetch>
+	...
+
+80002410 <_handle_NMI>:
+80002410:	c0 08       	rjmp	80002410 <_handle_NMI>
+	...
+
+80002414 <_handle_Instruction_Address>:
+80002414:	c0 08       	rjmp	80002414 <_handle_Instruction_Address>
+	...
+
+80002418 <_handle_ITLB_Protection>:
+80002418:	c0 08       	rjmp	80002418 <_handle_ITLB_Protection>
+	...
+
+8000241c <_handle_Breakpoint>:
+8000241c:	c0 08       	rjmp	8000241c <_handle_Breakpoint>
+	...
+
+80002420 <_handle_Illegal_Opcode>:
+80002420:	c0 08       	rjmp	80002420 <_handle_Illegal_Opcode>
+	...
+
+80002424 <_handle_Unimplemented_Instruction>:
+80002424:	c0 08       	rjmp	80002424 <_handle_Unimplemented_Instruction>
+	...
+
+80002428 <_handle_Privilege_Violation>:
+80002428:	c0 08       	rjmp	80002428 <_handle_Privilege_Violation>
+	...
+
+8000242c <_handle_Floating_Point>:
+8000242c:	c0 08       	rjmp	8000242c <_handle_Floating_Point>
+	...
+
+80002430 <_handle_Coprocessor_Absent>:
+80002430:	c0 08       	rjmp	80002430 <_handle_Coprocessor_Absent>
+	...
+
+80002434 <_handle_Data_Address_Read>:
+80002434:	c0 08       	rjmp	80002434 <_handle_Data_Address_Read>
+	...
+
+80002438 <_handle_Data_Address_Write>:
+80002438:	c0 08       	rjmp	80002438 <_handle_Data_Address_Write>
+	...
+
+8000243c <_handle_DTLB_Protection_Read>:
+8000243c:	c0 08       	rjmp	8000243c <_handle_DTLB_Protection_Read>
+	...
+
+80002440 <_handle_DTLB_Protection_Write>:
+80002440:	c0 08       	rjmp	80002440 <_handle_DTLB_Protection_Write>
+	...
+
+80002444 <_handle_DTLB_Modified>:
+80002444:	c0 08       	rjmp	80002444 <_handle_DTLB_Modified>
+	...
+
+80002450 <_handle_ITLB_Miss>:
+80002450:	c0 08       	rjmp	80002450 <_handle_ITLB_Miss>
+	...
+
+80002460 <_handle_DTLB_Miss_Read>:
+80002460:	c0 08       	rjmp	80002460 <_handle_DTLB_Miss_Read>
+	...
+
+80002470 <_handle_DTLB_Miss_Write>:
+80002470:	c0 08       	rjmp	80002470 <_handle_DTLB_Miss_Write>
+	...
+
+80002500 <_handle_Supervisor_Call>:
+80002500:	c0 08       	rjmp	80002500 <_handle_Supervisor_Call>
+80002502:	d7 03       	nop
+
+80002504 <_int0>:
+80002504:	30 0c       	mov	r12,0
+80002506:	c6 3e       	rcall	800021cc <_get_interrupt_handler>
+80002508:	58 0c       	cp.w	r12,0
+8000250a:	f8 0f 17 10 	movne	pc,r12
+8000250e:	d6 03       	rete
+
+80002510 <_int1>:
+80002510:	30 1c       	mov	r12,1
+80002512:	c5 de       	rcall	800021cc <_get_interrupt_handler>
+80002514:	58 0c       	cp.w	r12,0
+80002516:	f8 0f 17 10 	movne	pc,r12
+8000251a:	d6 03       	rete
+
+8000251c <_int2>:
+8000251c:	30 2c       	mov	r12,2
+8000251e:	c5 7e       	rcall	800021cc <_get_interrupt_handler>
+80002520:	58 0c       	cp.w	r12,0
+80002522:	f8 0f 17 10 	movne	pc,r12
+80002526:	d6 03       	rete
+
+80002528 <_int3>:
+80002528:	30 3c       	mov	r12,3
+8000252a:	c5 1e       	rcall	800021cc <_get_interrupt_handler>
+8000252c:	58 0c       	cp.w	r12,0
+8000252e:	f8 0f 17 10 	movne	pc,r12
+80002532:	d6 03       	rete
+80002534:	d7 03       	nop
+80002536:	d7 03       	nop
+80002538:	d7 03       	nop
+8000253a:	d7 03       	nop
+8000253c:	d7 03       	nop
+8000253e:	d7 03       	nop
+80002540:	d7 03       	nop
+80002542:	d7 03       	nop
+80002544:	d7 03       	nop
+80002546:	d7 03       	nop
+80002548:	d7 03       	nop
+8000254a:	d7 03       	nop
+8000254c:	d7 03       	nop
+8000254e:	d7 03       	nop
+80002550:	d7 03       	nop
+80002552:	d7 03       	nop
+80002554:	d7 03       	nop
+80002556:	d7 03       	nop
+80002558:	d7 03       	nop
+8000255a:	d7 03       	nop
+8000255c:	d7 03       	nop
+8000255e:	d7 03       	nop
+80002560:	d7 03       	nop
+80002562:	d7 03       	nop
+80002564:	d7 03       	nop
+80002566:	d7 03       	nop
+80002568:	d7 03       	nop
+8000256a:	d7 03       	nop
+8000256c:	d7 03       	nop
+8000256e:	d7 03       	nop
+80002570:	d7 03       	nop
+80002572:	d7 03       	nop
+80002574:	d7 03       	nop
+80002576:	d7 03       	nop
+80002578:	d7 03       	nop
+8000257a:	d7 03       	nop
+8000257c:	d7 03       	nop
+8000257e:	d7 03       	nop
+80002580:	d7 03       	nop
+80002582:	d7 03       	nop
+80002584:	d7 03       	nop
+80002586:	d7 03       	nop
+80002588:	d7 03       	nop
+8000258a:	d7 03       	nop
+8000258c:	d7 03       	nop
+8000258e:	d7 03       	nop
+80002590:	d7 03       	nop
+80002592:	d7 03       	nop
+80002594:	d7 03       	nop
+80002596:	d7 03       	nop
+80002598:	d7 03       	nop
+8000259a:	d7 03       	nop
+8000259c:	d7 03       	nop
+8000259e:	d7 03       	nop
+800025a0:	d7 03       	nop
+800025a2:	d7 03       	nop
+800025a4:	d7 03       	nop
+800025a6:	d7 03       	nop
+800025a8:	d7 03       	nop
+800025aa:	d7 03       	nop
+800025ac:	d7 03       	nop
+800025ae:	d7 03       	nop
+800025b0:	d7 03       	nop
+800025b2:	d7 03       	nop
+800025b4:	d7 03       	nop
+800025b6:	d7 03       	nop
+800025b8:	d7 03       	nop
+800025ba:	d7 03       	nop
+800025bc:	d7 03       	nop
+800025be:	d7 03       	nop
+800025c0:	d7 03       	nop
+800025c2:	d7 03       	nop
+800025c4:	d7 03       	nop
+800025c6:	d7 03       	nop
+800025c8:	d7 03       	nop
+800025ca:	d7 03       	nop
+800025cc:	d7 03       	nop
+800025ce:	d7 03       	nop
+800025d0:	d7 03       	nop
+800025d2:	d7 03       	nop
+800025d4:	d7 03       	nop
+800025d6:	d7 03       	nop
+800025d8:	d7 03       	nop
+800025da:	d7 03       	nop
+800025dc:	d7 03       	nop
+800025de:	d7 03       	nop
+800025e0:	d7 03       	nop
+800025e2:	d7 03       	nop
+800025e4:	d7 03       	nop
+800025e6:	d7 03       	nop
+800025e8:	d7 03       	nop
+800025ea:	d7 03       	nop
+800025ec:	d7 03       	nop
+800025ee:	d7 03       	nop
+800025f0:	d7 03       	nop
+800025f2:	d7 03       	nop
+800025f4:	d7 03       	nop
+800025f6:	d7 03       	nop
+800025f8:	d7 03       	nop
+800025fa:	d7 03       	nop
+800025fc:	d7 03       	nop
+800025fe:	d7 03       	nop
