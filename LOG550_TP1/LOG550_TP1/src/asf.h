@@ -84,19 +84,16 @@
 // From module: Part identification macros
 #include <parts.h>
 
-// From module: System Clock Control - UC3 A implementation
-#include <sysclk.h>
-
 // From module: TC - Timer/Counter
 #include <tc.h>
-
-// From module: USART - Serial interface - UC3 implementation
-#include <serial.h>
 
 // From module: USART - Universal Synchronous/Asynchronous Receiver/Transmitter
 #include <usart.h>
 
 // From module: USART Debug strings
 #include <print_funcs.h>
+
+// From module: WDT Watchdog Timer - UC3 A0/A1/A3/A4/B0/B1 implementation
+#include <wdt.h>
 
 #endif // ASF_H

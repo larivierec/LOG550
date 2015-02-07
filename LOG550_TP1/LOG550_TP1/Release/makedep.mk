@@ -8,6 +8,8 @@ src\ASF\avr32\drivers\flashc\flashc.c
 
 src\ASF\avr32\drivers\pm\pm.c
 
+src\ASF\avr32\drivers\usart\usart.c
+
 src\ASF\avr32\drivers\wdt\wdt.c
 
 src\ASF\avr32\drivers\pm\pm_conf_clocks.c
@@ -25,6 +27,8 @@ src\ASF\avr32\drivers\gpio\gpio.c
 src\ASF\avr32\drivers\intc\exception.S
 
 src\ASF\avr32\drivers\intc\intc.c
+
+src\ASF\avr32\utils\debug\print_funcs.c
 
 src\ASF\avr32\utils\startup\startup_uc3.S
 

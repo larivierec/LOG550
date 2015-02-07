@@ -44,8 +44,10 @@ SUBDIRS :=  \
 ../src/ASF/avr32/drivers/intc/ \
 ../src/ASF/avr32/drivers/pm/ \
 ../src/ASF/avr32/drivers/tc/ \
+../src/ASF/avr32/drivers/usart/ \
 ../src/ASF/avr32/drivers/wdt/ \
 ../src/ASF/avr32/utils/ \
+../src/ASF/avr32/utils/debug/ \
 ../src/ASF/avr32/utils/header_files/ \
 ../src/ASF/avr32/utils/linker_scripts/ \
 ../src/ASF/avr32/utils/linker_scripts/at32uc3a/ \
@@ -66,6 +68,7 @@ C_SRCS +=  \
 ../src/ASF/avr32/drivers/adc/adc.c \
 ../src/ASF/avr32/drivers/flashc/flashc.c \
 ../src/ASF/avr32/drivers/pm/pm.c \
+../src/ASF/avr32/drivers/usart/usart.c \
 ../src/ASF/avr32/drivers/wdt/wdt.c \
 ../src/ASF/avr32/drivers/pm/pm_conf_clocks.c \
 ../src/ASF/avr32/drivers/pm/power_clocks_lib.c \
@@ -74,6 +77,7 @@ C_SRCS +=  \
 ../src/ASF/avr32/boards/evk1100/led.c \
 ../src/ASF/avr32/drivers/gpio/gpio.c \
 ../src/ASF/avr32/drivers/intc/intc.c \
+../src/ASF/avr32/utils/debug/print_funcs.c \
 ../src/main.c
 
 
@@ -90,6 +94,7 @@ OBJS +=  \
 src/ASF/avr32/drivers/adc/adc.o \
 src/ASF/avr32/drivers/flashc/flashc.o \
 src/ASF/avr32/drivers/pm/pm.o \
+src/ASF/avr32/drivers/usart/usart.o \
 src/ASF/avr32/drivers/wdt/wdt.o \
 src/ASF/avr32/drivers/pm/pm_conf_clocks.o \
 src/ASF/avr32/drivers/pm/power_clocks_lib.o \
@@ -99,6 +104,7 @@ src/ASF/avr32/boards/evk1100/led.o \
 src/ASF/avr32/drivers/gpio/gpio.o \
 src/ASF/avr32/drivers/intc/exception.o \
 src/ASF/avr32/drivers/intc/intc.o \
+src/ASF/avr32/utils/debug/print_funcs.o \
 src/ASF/avr32/utils/startup/startup_uc3.o \
 src/ASF/avr32/utils/startup/trampoline_uc3.o \
 src/main.o
@@ -107,6 +113,7 @@ OBJS_AS_ARGS +=  \
 src/ASF/avr32/drivers/adc/adc.o \
 src/ASF/avr32/drivers/flashc/flashc.o \
 src/ASF/avr32/drivers/pm/pm.o \
+src/ASF/avr32/drivers/usart/usart.o \
 src/ASF/avr32/drivers/wdt/wdt.o \
 src/ASF/avr32/drivers/pm/pm_conf_clocks.o \
 src/ASF/avr32/drivers/pm/power_clocks_lib.o \
@@ -116,6 +123,7 @@ src/ASF/avr32/boards/evk1100/led.o \
 src/ASF/avr32/drivers/gpio/gpio.o \
 src/ASF/avr32/drivers/intc/exception.o \
 src/ASF/avr32/drivers/intc/intc.o \
+src/ASF/avr32/utils/debug/print_funcs.o \
 src/ASF/avr32/utils/startup/startup_uc3.o \
 src/ASF/avr32/utils/startup/trampoline_uc3.o \
 src/main.o
@@ -124,6 +132,7 @@ C_DEPS +=  \
 src/ASF/avr32/drivers/adc/adc.d \
 src/ASF/avr32/drivers/flashc/flashc.d \
 src/ASF/avr32/drivers/pm/pm.d \
+src/ASF/avr32/drivers/usart/usart.d \
 src/ASF/avr32/drivers/wdt/wdt.d \
 src/ASF/avr32/drivers/pm/pm_conf_clocks.d \
 src/ASF/avr32/drivers/pm/power_clocks_lib.d \
@@ -133,6 +142,7 @@ src/ASF/avr32/boards/evk1100/led.d \
 src/ASF/avr32/drivers/gpio/gpio.d \
 src/ASF/avr32/drivers/intc/exception.d \
 src/ASF/avr32/drivers/intc/intc.d \
+src/ASF/avr32/utils/debug/print_funcs.d \
 src/ASF/avr32/utils/startup/startup_uc3.d \
 src/ASF/avr32/utils/startup/trampoline_uc3.d \
 src/main.d
@@ -141,6 +151,7 @@ C_DEPS_AS_ARGS +=  \
 src/ASF/avr32/drivers/adc/adc.d \
 src/ASF/avr32/drivers/flashc/flashc.d \
 src/ASF/avr32/drivers/pm/pm.d \
+src/ASF/avr32/drivers/usart/usart.d \
 src/ASF/avr32/drivers/wdt/wdt.d \
 src/ASF/avr32/drivers/pm/pm_conf_clocks.d \
 src/ASF/avr32/drivers/pm/power_clocks_lib.d \
@@ -150,6 +161,7 @@ src/ASF/avr32/boards/evk1100/led.d \
 src/ASF/avr32/drivers/gpio/gpio.d \
 src/ASF/avr32/drivers/intc/exception.d \
 src/ASF/avr32/drivers/intc/intc.d \
+src/ASF/avr32/utils/debug/print_funcs.d \
 src/ASF/avr32/utils/startup/startup_uc3.d \
 src/ASF/avr32/utils/startup/trampoline_uc3.d \
 src/main.d
@@ -190,66 +202,84 @@ LIB_DEP+=
 
 
 
+
+
+
+
 src/ASF/avr32/drivers/adc/%.o: ../src/ASF/avr32/drivers/adc/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/flashc/%.o: ../src/ASF/avr32/drivers/flashc/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/pm/%.o: ../src/ASF/avr32/drivers/pm/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/avr32/drivers/usart/%.o: ../src/ASF/avr32/drivers/usart/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/wdt/%.o: ../src/ASF/avr32/drivers/wdt/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/tc/%.o: ../src/ASF/avr32/drivers/tc/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/boards/evk1100/%.o: ../src/ASF/avr32/boards/evk1100/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/gpio/%.o: ../src/ASF/avr32/drivers/gpio/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/avr32/utils/debug/%.o: ../src/ASF/avr32/utils/debug/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/%.o: ../src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DNDEBUG -DBOARD=EVK1100  -I"../common/applications/user_application/at32uc3a0512_evk1100/config" -I"../src/ASF/avr32/utils" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/boards/evk1100" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/config" -I"../src/ASF/avr32/boards" -I"../src/ASF/avr32/drivers/adc" -I"../src/ASF/avr32/drivers/flashc" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/wdt" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/utils/debug"  -Os -fdata-sections -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -260,42 +290,42 @@ src/%.o: ../src/%.c
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.S
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt" -I "../src/ASF/avr32/drivers/usart" -I "../src/ASF/avr32/utils/debug"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.x
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt" -I "../src/ASF/avr32/drivers/usart" -I "../src/ASF/avr32/utils/debug"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.X
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt" -I "../src/ASF/avr32/drivers/usart" -I "../src/ASF/avr32/utils/debug"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/utils/startup/%.o: ../src/ASF/avr32/utils/startup/%.S
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt" -I "../src/ASF/avr32/drivers/usart" -I "../src/ASF/avr32/utils/debug"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/utils/startup/%.o: ../src/ASF/avr32/utils/startup/%.x
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt" -I "../src/ASF/avr32/drivers/usart" -I "../src/ASF/avr32/utils/debug"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/utils/startup/%.o: ../src/ASF/avr32/utils/startup/%.X
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -mrelax -DBOARD=EVK1100 -I "../common/applications/user_application/at32uc3a0512_evk1100/config" -I "../src/ASF/avr32/utils" -I "../src/ASF/avr32/drivers/gpio" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/boards/evk1100" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/config" -I "../src/ASF/avr32/boards" -I "../src/ASF/avr32/drivers/adc" -I "../src/ASF/avr32/drivers/flashc" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/wdt" -I "../src/ASF/avr32/drivers/usart" -I "../src/ASF/avr32/utils/debug"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -320,13 +350,13 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR32/GNU Linker : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -nostartfiles -Wl,-Map="LOG550_TP1.map" -Wl,--start-group -lm  -Wl,--end-group -Wl,--gc-sections --rodata-writable -Wl,--direct-data -mpart=uc3a0512 -Wl,--relax -T../src/ASF/avr32/utils/linker_scripts/at32uc3a/0512/gcc/link_uc3a0512.lds -Wl,-e,_trampoline  
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -nostartfiles -Wl,-Map="LOG550_TP1.map" -Wl,--start-group -lm  -Wl,--end-group -Wl,--gc-sections --rodata-writable -Wl,--direct-data -mpart=uc3a0512 -Wl,--relax -T../src/ASF/avr32/utils/linker_scripts/at32uc3a/0512/gcc/link_uc3a0512.lds -Wl,-e,_trampoline  
 	@echo Finished building target: $@
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature "LOG550_TP1.elf" "LOG550_TP1.hex"
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "LOG550_TP1.elf" "LOG550_TP1.eep" || exit 0
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objdump.exe" -h -S "LOG550_TP1.elf" > "LOG550_TP1.lss"
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "LOG550_TP1.elf" "LOG550_TP1.srec"
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-size.exe" "LOG550_TP1.elf"
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature "LOG550_TP1.elf" "LOG550_TP1.hex"
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "LOG550_TP1.elf" "LOG550_TP1.eep" || exit 0
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objdump.exe" -h -S "LOG550_TP1.elf" > "LOG550_TP1.lss"
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "LOG550_TP1.elf" "LOG550_TP1.srec"
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-size.exe" "LOG550_TP1.elf"
 	
 	
 
