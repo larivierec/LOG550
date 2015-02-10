@@ -44,7 +44,13 @@
 /* Le numero du pin du push button                                      */
 /************************************************************************/
 
-#define PUSH_BUTTON_0				32
+#define PUSH_BUTTON_0				88
+
+/************************************************************************/
+/* Usable boolean bits				                                    */
+/************************************************************************/
+
+#define PUSHED_PB_0                 1 << 0
 
 /************************************************************************/
 /* ADC Light Channel configurations     UC3A0512.h                      */
@@ -143,6 +149,8 @@ volatile U32 potValue = 0;
 
 volatile avr32_tc_t *tc0 = TIMER_COUNTER;
 volatile avr32_tc_t *tc1 = TIMER_COUNTER;
+volatile U8 booleanValues = 8;
+volatile int current =1;
 
 __attribute__((__interrupt__))
 static void irq_led(void)
@@ -185,7 +193,14 @@ static void irq_serial_communication(void)
 __attribute__((__interrupt__))
 static void irq_push_button(void)
 {
-	
+	if(booleanValues | PUSHED_PB_0)
+	{
+		//booleanValues |= PUSHED_PB_0;
+		booleanValues = PUSHED_PB_0;
+		TOGGLE_LED(LED3);
+	}
+	gpio_clear_pin_interrupt_flag(PUSH_BUTTON_0);
+	//TOGGLE_LED(LED5);
 }
 
 __attribute__((__interrupt__))
@@ -235,6 +250,8 @@ void timercounter_init(void)
 	INTC_register_interrupt(&irq_adc_timer,TIMER_COUNTER_2_IRQ,P_HIGH);
 	INTC_register_interrupt(&irq_led, TIMER_COUNTER_1_IRQ, P_LOWEST);
 	
+	current = 2;
+	
 	tc_init_waveform(tc0, &WAVEFORM_OPT_1);
 	tc_write_rc(tc0, TC_CHANNEL_1, (FPBA / 32) / 2000);
 	tc_configure_interrupts(tc0, TC_CHANNEL_1, &TC_INTERRUPT_0);
@@ -261,7 +278,9 @@ void usart_init(void)
 
 void push_button_init(void)
 {
-	INTC_register_interrupt(&irq_push_button, TIMER_COUNTER_1_IRQ, P_LOWEST);
+	INTC_register_interrupt(&irq_push_button,(AVR32_GPIO_IRQ_0+PUSH_BUTTON_0/8),AVR32_INTC_INT0);
+	gpio_enable_gpio_pin(PUSH_BUTTON_0);
+	gpio_enable_pin_interrupt(PUSH_BUTTON_0,GPIO_FALLING_EDGE);
 }
 
 void intialization(void)
@@ -271,7 +290,7 @@ void intialization(void)
 	INTC_init_interrupts();	
 	
 	adc_init();
-	//push_button_init();
+	push_button_init();
 	usart_init();
 	timercounter_init();
 	
@@ -318,6 +337,25 @@ int main (void)
 		if(sensorValueReady || (potValueReady && lightSensorSent))
 		{
 			AVR32_USART1.ier = AVR32_USART_IER_TXRDY_MASK;
+		}
+		
+		//If we pressed the PB0, we change the hertz
+		if(booleanValues == (booleanValues | PUSHED_PB_0))
+		{
+			booleanValues &= ~0x01;
+			switch(current)
+			{
+				case 1:
+					tc_write_rc(tc0, TC_CHANNEL_1, (FPBA / 32) / 2000);
+					tc_write_rc(tc0, TC_CHANNEL_2, (FPBA / 32) / 2000);
+					current = 2;
+					break;
+				case 2:
+					tc_write_rc(tc0, TC_CHANNEL_1, (FPBA / 32) / 1000);
+					tc_write_rc(tc0, TC_CHANNEL_2, (FPBA / 32) / 1000);
+					current = 1;
+					break;
+			}
 		}
 	}
 }
