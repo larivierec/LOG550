@@ -211,7 +211,10 @@ __attribute__((__interrupt__))
 static void irq_adc_timer(void)
 {
 	tc_read_sr(TIMER_COUNTER, TC_CHANNEL_2);
-	startAdcConversion = 1;
+	if(startAdcConversion == 0)
+	{
+		startAdcConversion = 1;
+	}
 }
 
 //need more reading
@@ -241,6 +244,8 @@ void timercounter_init(void)
 	tc_write_rc(tc0, TC_CHANNEL_2, (FPBA / 32) / 2000);
 	tc_configure_interrupts(tc0, TC_CHANNEL_2, &TC_INTERRUPT_0);
 	tc_start(tc0, TC_CHANNEL_2);
+	TOGGLE_LED(LED1);
+	TOGGLE_LED(LED2);	
 }
 
 void usart_init(void)
@@ -284,7 +289,7 @@ int main (void)
 	
 	while(1) // Boucle inifinie a vide !
 	{
-		if(startAdcConversion == 1)
+		if(startAdcConversion == 1 && dataAcquisitionStarted == 1)
 		{
 			AVR32_ADC.cr = AVR32_ADC_START_MASK;
 		}
