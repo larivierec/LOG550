@@ -54,11 +54,15 @@
 #define DEPASSEMENT_UART			1 << 1
 #define DEPASSEMENT_ADC				1 << 2
 #define INDICATION_LED				1 << 3
+#define SENSOR_VAL_RDY				1 << 4
+#define POTENTIOMETER_VAL_RDY		1 << 5
 
 #define IS_PUSHED					(booleanValues == (booleanValues | PUSHED_PB_0))
 #define IS_DEPASSEMENT_UART			(booleanValues == (booleanValues | DEPASSEMENT_UART))
 #define IS_DEPASSEMENT_ADC			(booleanValues == (booleanValues | DEPASSEMENT_ADC))
 #define IS_LED						(booleanValues == (booleanValues | INDICATION_LED))
+#define IS_SENSOR_VAL_RDY			(booleanValues == (booleanValues | SENSOR_VAL_RDY))
+#define IS_POTENTIOMETER_VAL_RDY	(booleanValues == (booleanValues | POTENTIOMETER_VAL_RDY))
 
 /************************************************************************/
 /* ADC Light Channel configurations     UC3A0512.h                      */
@@ -67,7 +71,8 @@
 #define LIGHT_CHANNEL				2
 
 // Fonctions preprocesseur
-#define TOGGLE_LED(ledNumber)		(LED_Toggle(ledNumber))
+#define TOGGLE_LED(ledNumber)			(LED_Toggle(ledNumber))
+#define GET_GPIOPORT_NUMBER(GPIONUMBER)	(GPIONUMBER / 32)
 
 // Variables globales
 // Configuration du peripherique TC
@@ -154,7 +159,7 @@ volatile U32 lightSensorValue = 0;
 volatile U32 potValue = 0;	
 
 volatile avr32_tc_t *tc0 = TIMER_COUNTER;
-volatile avr32_tc_t *tc1 = TIMER_COUNTER;
+
 volatile U8 booleanValues = 8;
 volatile int current =1;
 
@@ -203,7 +208,6 @@ static void irq_push_button(void)
 	if(booleanValues | PUSHED_PB_0)
 	{
 		booleanValues |= PUSHED_PB_0;
-		
 	}
 	gpio_clear_pin_interrupt_flag(PUSH_BUTTON_0);
 }
