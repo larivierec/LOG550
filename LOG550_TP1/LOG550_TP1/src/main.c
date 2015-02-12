@@ -51,14 +51,6 @@
 /************************************************************************/
 
 #define PUSHED_PB_0                 1 << 0
-#define DEPASSEMENT_UART			1 << 1
-#define DEPASSEMENT_ADC				1 << 2
-#define INDICATION_LED				1 << 3
-
-#define IS_PUSHED					(booleanValues == (booleanValues | PUSHED_PB_0))
-#define IS_DEPASSEMENT_UART			(booleanValues == (booleanValues | DEPASSEMENT_UART))
-#define IS_DEPASSEMENT_ADC			(booleanValues == (booleanValues | DEPASSEMENT_ADC))
-#define IS_LED						(booleanValues == (booleanValues | INDICATION_LED))
 
 /************************************************************************/
 /* ADC Light Channel configurations     UC3A0512.h                      */
@@ -147,14 +139,16 @@ U8 lightSensorSent = 0;
 
 //Variables
 
+volatile U8 programRunning;
 U32 incomingSerialValue;
 U8 compteur;
+U8 pushButtonPushed = 0;
 
 volatile U32 lightSensorValue = 0;
 volatile U32 potValue = 0;	
 
 volatile avr32_tc_t *tc0 = TIMER_COUNTER;
-volatile avr32_tc_t *tc1 = TIMER_COUNTER;
+
 volatile U8 booleanValues = 8;
 volatile int current =1;
 
@@ -163,7 +157,7 @@ static void irq_led(void)
 {
 	// La lecture du registre SR efface le fanion de l'interruption.
 	tc_read_sr(TIMER_COUNTER, TC_CHANNEL_1);
-	booleanValues |= INDICATION_LED;
+	programRunning = 1;
 }
 
 __attribute__((__interrupt__))
@@ -176,7 +170,6 @@ static void irq_serial_communication(void)
 	}
 	else
 	{
-		
 		//Transmitting
 		if(potValueReady)
 		{
@@ -202,20 +195,17 @@ static void irq_push_button(void)
 {
 	if(booleanValues | PUSHED_PB_0)
 	{
-		booleanValues |= PUSHED_PB_0;
-		
+		//booleanValues |= PUSHED_PB_0;
+		booleanValues = PUSHED_PB_0;
+		TOGGLE_LED(LED3);
 	}
 	gpio_clear_pin_interrupt_flag(PUSH_BUTTON_0);
+	//TOGGLE_LED(LED5);
 }
 
 __attribute__((__interrupt__))
 static void irq_adc_channel(void)
 {
-	// Check depassement du UART par le ADC
-	if(sensorValueReady == 1 && potValueReady == 1)
-	{
-		booleanValues |= DEPASSEMENT_UART;
-	}
 	U32 statusRegister = AVR32_ADC.sr;
 	//light sensor conversion done
 	if(statusRegister & AVR32_ADC_IER_EOC2_MASK)
@@ -263,14 +253,16 @@ void timercounter_init(void)
 	current = 2;
 	
 	tc_init_waveform(tc0, &WAVEFORM_OPT_1);
-	tc_write_rc(tc0, TC_CHANNEL_1, (FPBA >> 4) >> 4);
+	tc_write_rc(tc0, TC_CHANNEL_1, (FPBA / 32) / 2000);
 	tc_configure_interrupts(tc0, TC_CHANNEL_1, &TC_INTERRUPT_0);
 	tc_start(tc0, TC_CHANNEL_1);
 	
 	tc_init_waveform(tc0, &WAVEFORM_OPT_2);
-	tc_write_rc(tc0, TC_CHANNEL_2, (FPBA >> 4) / 2000);
+	tc_write_rc(tc0, TC_CHANNEL_2, (FPBA / 32) / 2000);
 	tc_configure_interrupts(tc0, TC_CHANNEL_2, &TC_INTERRUPT_0);
 	tc_start(tc0, TC_CHANNEL_2);
+	TOGGLE_LED(LED1);
+	TOGGLE_LED(LED2);	
 }
 
 void usart_init(void)
@@ -306,37 +298,38 @@ void intialization(void)
 	
 	
 	print_dbg("Taper S ou X pour demarrer l'acquisition de donnees: \n");
+	
+	programRunning = 0;
 }
 
 int main (void)
 {
 	intialization();
 	
-	while(1)
+	while(1) // Boucle inifinie a vide !
 	{
 		if(startAdcConversion == 1 && dataAcquisitionStarted == 1)
 		{
 			AVR32_ADC.cr = AVR32_ADC_START_MASK;
 		}
 		
-		if(IS_LED)
+		if(programRunning == 1)
 		{
 			TOGGLE_LED(LED0);
-			TOGGLE_LED(LED1);
-			booleanValues &= ~0x08;
+			programRunning=0;
 		}
 		//Les valeurs du UART
 		
 		if(incomingSerialValue == 'x' || incomingSerialValue == 'X')
 		{
-			TOGGLE_LED(LED6);
+			TOGGLE_LED(LED3);
 			dataAcquisitionStarted = 0;
 			incomingSerialValue = 'a';
 		}
 		
 		if(incomingSerialValue == 's' || incomingSerialValue == 'S')
 		{
-			TOGGLE_LED(LED7);
+			TOGGLE_LED(LED4);
 			dataAcquisitionStarted = 1;
 			incomingSerialValue = 'a';
 		}
@@ -347,31 +340,22 @@ int main (void)
 		}
 		
 		//If we pressed the PB0, we change the hertz
-		if(IS_PUSHED)
+		if(booleanValues == (booleanValues | PUSHED_PB_0))
 		{
 			booleanValues &= ~0x01;
 			switch(current)
 			{
 				case 1:
-					tc_write_rc(tc0, TC_CHANNEL_2, (FPBA >> 4) / 2000);
+					tc_write_rc(tc0, TC_CHANNEL_1, (FPBA / 32) / 2000);
+					tc_write_rc(tc0, TC_CHANNEL_2, (FPBA / 32) / 2000);
 					current = 2;
 					break;
 				case 2:
-					tc_write_rc(tc0, TC_CHANNEL_2, (FPBA >> 4) / 1000);
+					tc_write_rc(tc0, TC_CHANNEL_1, (FPBA / 32) / 1000);
+					tc_write_rc(tc0, TC_CHANNEL_2, (FPBA / 32) / 1000);
 					current = 1;
 					break;
 			}
-			//TOGGLE_LED(LED3); Can't use it since used by displacement
-		}
-		
-		// Dépassements
-		if(IS_DEPASSEMENT_ADC)
-		{
-			LED_Toggle(LED3);
-		}
-		if(IS_DEPASSEMENT_UART)
-		{
-			LED_Toggle(LED4);
 		}
 	}
 }
