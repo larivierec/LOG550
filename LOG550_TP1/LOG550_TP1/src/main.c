@@ -56,6 +56,16 @@
 #define INDICATION_LED				1 << 3
 #define SENSOR_VAL_RDY				1 << 4
 #define POTENTIOMETER_VAL_RDY		1 << 5
+#define START_ADC_CONVERSION		1 << 6
+#define DATA_ACQUISITION_RDY		1 << 7
+
+#define CLEAR_PUSH_BUTTON			(booleanValues &= ~0x00)
+#define CLEAR_DEPASSEMENT_FLAG		(booleanValues &= ~0x01)
+#define CLEAR_LED_FLAG				(booleanValues &= ~0x08)
+#define CLEAR_SENSOR_FLAG			(booleanValues &= ~0x10)
+#define CLEAR_POTENTIOMETER_FLAG	(booleanValues &= ~0x20)
+#define CLEAR_ADC_CONVERSION_FLAG	(booleanValues &= ~0x40)
+#define CLEAR_DATA_ACQUISITION_FLAG	(booleanValues &= ~0x80)
 
 #define IS_PUSHED					(booleanValues == (booleanValues | PUSHED_PB_0))
 #define IS_DEPASSEMENT_UART			(booleanValues == (booleanValues | DEPASSEMENT_UART))
@@ -63,6 +73,8 @@
 #define IS_LED						(booleanValues == (booleanValues | INDICATION_LED))
 #define IS_SENSOR_VAL_RDY			(booleanValues == (booleanValues | SENSOR_VAL_RDY))
 #define IS_POTENTIOMETER_VAL_RDY	(booleanValues == (booleanValues | POTENTIOMETER_VAL_RDY))
+#define IS_ADC_STARTED				(booleanValues == (booleanValues | START_ADC_CONVERSION))
+#define IS_DATA_ACQUISITION_RDY		(booleanValues == (booleanValues | DATA_ACQUISITION_RDY))
 
 /************************************************************************/
 /* ADC Light Channel configurations     UC3A0512.h                      */
@@ -144,10 +156,6 @@ static const gpio_map_t USART_GPIO_MAP =
 
 //Flags
 
-U8 dataAcquisitionStarted = 0;
-U8 sensorValueReady = 0;
-U8 potValueReady = 0;
-U8 startAdcConversion = 0;
 U8 lightSensorSent = 0;
 
 //Variables
@@ -160,7 +168,7 @@ volatile U32 potValue = 0;
 
 volatile avr32_tc_t *tc0 = TIMER_COUNTER;
 
-volatile U8 booleanValues = 8;
+volatile U8 booleanValues = 0;
 volatile int current =1;
 
 __attribute__((__interrupt__))
@@ -183,16 +191,16 @@ static void irq_serial_communication(void)
 	{
 		
 		//Transmitting
-		if(potValueReady)
+		if(IS_POTENTIOMETER_VAL_RDY)
 		{
 			AVR32_USART1.thr = potValue & AVR32_USART_THR_TXCHR_MASK;
-			potValueReady = 0;
+			CLEAR_POTENTIOMETER_FLAG;
 		}
-		else if(sensorValueReady)
+		else if(IS_SENSOR_VAL_RDY)
 		{
 			
 			AVR32_USART1.thr = 	lightSensorValue & AVR32_USART_THR_TXCHR_MASK;
-			sensorValueReady = 0;
+			CLEAR_SENSOR_FLAG;
 			lightSensorSent = 1;
 		}
 		else
@@ -216,33 +224,37 @@ __attribute__((__interrupt__))
 static void irq_adc_channel(void)
 {
 	// Check depassement du UART par le ADC
-	if(sensorValueReady == 1 && potValueReady == 1)
+	if(IS_SENSOR_VAL_RDY && POTENTIOMETER_VAL_RDY)
 	{
 		booleanValues |= DEPASSEMENT_UART;
+	}
+	else
+	{
+		CLEAR_DEPASSEMENT_FLAG;
 	}
 	U32 statusRegister = AVR32_ADC.sr;
 	//light sensor conversion done
 	if(statusRegister & AVR32_ADC_IER_EOC2_MASK)
 	{
 		lightSensorValue = AVR32_ADC.cdr2;
-		sensorValueReady = 1;
+		booleanValues |= SENSOR_VAL_RDY;
 	}
 	//potentiometer conversion done
 	else if(statusRegister & AVR32_ADC_IER_EOC1_MASK)
 	{
 		potValue = AVR32_ADC.cdr1;
-		potValueReady = 1;
+		booleanValues |= POTENTIOMETER_VAL_RDY;
 	}
-	startAdcConversion = 0;
+	CLEAR_ADC_CONVERSION_FLAG;
 }
 
 __attribute__((__interrupt__))
 static void irq_adc_timer(void)
 {
 	tc_read_sr(TIMER_COUNTER, TC_CHANNEL_2);
-	if(startAdcConversion == 0)
+	if(!IS_ADC_STARTED)
 	{
-		startAdcConversion = 1;
+		booleanValues |= START_ADC_CONVERSION;
 	}
 }
 
@@ -318,7 +330,7 @@ int main (void)
 	
 	while(1)
 	{
-		if(startAdcConversion == 1 && dataAcquisitionStarted == 1)
+		if(IS_ADC_STARTED && IS_DATA_ACQUISITION_RDY)
 		{
 			AVR32_ADC.cr = AVR32_ADC_START_MASK;
 		}
@@ -327,25 +339,26 @@ int main (void)
 		{
 			TOGGLE_LED(LED0);
 			TOGGLE_LED(LED1);
-			booleanValues &= ~0x08;
+			CLEAR_LED_FLAG;
 		}
 		//Les valeurs du UART
 		
 		if(incomingSerialValue == 'x' || incomingSerialValue == 'X')
 		{
 			TOGGLE_LED(LED6);
-			dataAcquisitionStarted = 0;
+			CLEAR_DATA_ACQUISITION_FLAG;
 			incomingSerialValue = 'a';
 		}
 		
 		if(incomingSerialValue == 's' || incomingSerialValue == 'S')
 		{
 			TOGGLE_LED(LED7);
-			dataAcquisitionStarted = 1;
+			booleanValues |= DATA_ACQUISITION_RDY;
 			incomingSerialValue = 'a';
 		}
 		
-		if(sensorValueReady || (potValueReady && lightSensorSent))
+		//if(sensorValueReady || (potValueReady && lightSensorSent))
+		if(IS_SENSOR_VAL_RDY || (POTENTIOMETER_VAL_RDY && lightSensorSent))
 		{
 			AVR32_USART1.ier = AVR32_USART_IER_TXRDY_MASK;
 		}
@@ -353,7 +366,7 @@ int main (void)
 		//If we pressed the PB0, we change the hertz
 		if(IS_PUSHED)
 		{
-			booleanValues &= ~0x01;
+			CLEAR_PUSH_BUTTON;
 			switch(current)
 			{
 				case 1:
