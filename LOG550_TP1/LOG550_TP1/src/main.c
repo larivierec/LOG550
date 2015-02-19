@@ -26,19 +26,12 @@
 #define FPBA                        FOSC0
 #define FALSE						0
 
-/************************************************************************/
-/*  Le numero du PIN correspondant au LED sur le UC3A					*/
-/*	voir uc3a0512.h														*/
-/************************************************************************/
+#define FOURHERTZ					46875
+#define TWOKHERTZ					94
+#define ONEKHERTZ					188
+#define FOURKHERTZ					47
 
-#define LED0_LOCAL					59
-#define LED1_LOCAL					60
-#define LED2_LOCAL					61
-#define LED3_LOCAL					62
-#define LED4_LOCAL					51
-#define LED5_LOCAL					52
-#define LED6_LOCAL					53
-#define LED7_LOCAL					54
+
 
 /************************************************************************/
 /* Le numero du pin du push button                                      */
@@ -58,14 +51,17 @@
 #define POTENTIOMETER_VAL_RDY		1 << 5
 #define START_ADC_CONVERSION		1 << 6
 #define DATA_ACQUISITION_RDY		1 << 7
+#define ALREADY_ON_FLAG				1 << 8
 
-#define CLEAR_PUSH_BUTTON			(booleanValues &= ~0x00)
-#define CLEAR_DEPASSEMENT_FLAG		(booleanValues &= ~0x01)
+#define CLEAR_PUSH_BUTTON			(booleanValues &= ~0x01)
+#define CLEAR_DEPASSEMENT_UART_FLAG	(booleanValues &= ~0x02)
+#define CLEAR_DEPASSEMENT_ADC_FLAG	(booleanValues &= ~0x04)
 #define CLEAR_LED_FLAG				(booleanValues &= ~0x08)
 #define CLEAR_SENSOR_FLAG			(booleanValues &= ~0x10)
 #define CLEAR_POTENTIOMETER_FLAG	(booleanValues &= ~0x20)
 #define CLEAR_ADC_CONVERSION_FLAG	(booleanValues &= ~0x40)
 #define CLEAR_DATA_ACQUISITION_FLAG	(booleanValues &= ~0x80)
+#define CLEAR_ALREADY_ON			(booleanValues &= ~0x100)
 
 #define IS_PUSHED					(booleanValues == (booleanValues | PUSHED_PB_0))
 #define IS_DEPASSEMENT_UART			(booleanValues == (booleanValues | DEPASSEMENT_UART))
@@ -75,6 +71,7 @@
 #define IS_POTENTIOMETER_VAL_RDY	(booleanValues == (booleanValues | POTENTIOMETER_VAL_RDY))
 #define IS_ADC_STARTED				(booleanValues == (booleanValues | START_ADC_CONVERSION))
 #define IS_DATA_ACQUISITION_RDY		(booleanValues == (booleanValues | DATA_ACQUISITION_RDY))
+#define IS_ALREADY_ON				(booleanValues == (booleanValues | ALREADY_ON_FLAG))
 
 /************************************************************************/
 /* ADC Light Channel configurations     UC3A0512.h                      */
@@ -168,7 +165,7 @@ volatile U32 potValue = 0;
 
 volatile avr32_tc_t *tc0 = TIMER_COUNTER;
 
-volatile U8 booleanValues = 0;
+volatile U16 booleanValues = 0;
 volatile int current =1;
 
 __attribute__((__interrupt__))
@@ -189,7 +186,6 @@ static void irq_serial_communication(void)
 	}
 	else
 	{
-		
 		//Transmitting
 		if(IS_POTENTIOMETER_VAL_RDY)
 		{
@@ -224,14 +220,11 @@ __attribute__((__interrupt__))
 static void irq_adc_channel(void)
 {
 	// Check depassement du UART par le ADC
-	if(IS_SENSOR_VAL_RDY && POTENTIOMETER_VAL_RDY)
+	if(IS_SENSOR_VAL_RDY && IS_POTENTIOMETER_VAL_RDY)
 	{
-		booleanValues |= DEPASSEMENT_UART;
+		booleanValues |= DEPASSEMENT_ADC;
 	}
-	else
-	{
-		CLEAR_DEPASSEMENT_FLAG;
-	}
+	
 	U32 statusRegister = AVR32_ADC.sr;
 	//light sensor conversion done
 	if(statusRegister & AVR32_ADC_IER_EOC2_MASK)
@@ -273,18 +266,19 @@ void adc_init(void)
 void timercounter_init(void)
 {
 	pcl_switch_to_osc(PCL_OSC0, FOSC0, OSC0_STARTUP);
-	INTC_register_interrupt(&irq_adc_timer,TIMER_COUNTER_2_IRQ,P_HIGH);
+	INTC_register_interrupt(&irq_adc_timer,TIMER_COUNTER_2_IRQ,P_LOWEST);
 	INTC_register_interrupt(&irq_led, TIMER_COUNTER_1_IRQ, P_LOWEST);
 	
 	current = 2;
 	
 	tc_init_waveform(tc0, &WAVEFORM_OPT_1);
-	tc_write_rc(tc0, TC_CHANNEL_1, (FPBA >> 4) >> 4);
+	//4Hz = 4 cycles / second
+	tc_write_rc(tc0, TC_CHANNEL_1, FOURHERTZ);
 	tc_configure_interrupts(tc0, TC_CHANNEL_1, &TC_INTERRUPT_0);
 	tc_start(tc0, TC_CHANNEL_1);
 	
 	tc_init_waveform(tc0, &WAVEFORM_OPT_2);
-	tc_write_rc(tc0, TC_CHANNEL_2, (FPBA >> 4) / 2000);
+	tc_write_rc(tc0, TC_CHANNEL_2, TWOKHERTZ);
 	tc_configure_interrupts(tc0, TC_CHANNEL_2, &TC_INTERRUPT_0);
 	tc_start(tc0, TC_CHANNEL_2);
 }
@@ -320,7 +314,8 @@ void intialization(void)
 	
 	Enable_global_interrupt();	
 	
-	
+	LED_Toggle(LED1);
+	LED_Off(LED4);
 	print_dbg("Taper S ou X pour demarrer l'acquisition de donnees: \n");
 }
 
@@ -338,28 +333,35 @@ int main (void)
 		if(IS_LED)
 		{
 			TOGGLE_LED(LED0);
-			TOGGLE_LED(LED1);
+			if(IS_DATA_ACQUISITION_RDY)
+			{
+				TOGGLE_LED(LED1);	
+			}
 			CLEAR_LED_FLAG;
 		}
 		//Les valeurs du UART
 		
-		if(incomingSerialValue == 'x' || incomingSerialValue == 'X')
+		if((incomingSerialValue == 'x' || incomingSerialValue == 'X') && IS_ALREADY_ON)
 		{
-			TOGGLE_LED(LED6);
 			CLEAR_DATA_ACQUISITION_FLAG;
-			incomingSerialValue = 'a';
+			CLEAR_ALREADY_ON;
+			LED_Off(LED1);
 		}
 		
-		if(incomingSerialValue == 's' || incomingSerialValue == 'S')
+		if((incomingSerialValue == 's' || incomingSerialValue == 'S') && !IS_ALREADY_ON)
 		{
-			TOGGLE_LED(LED7);
+			(LED_Test(LED0) == true) ? LED_On(LED1) : false;
+			booleanValues |= ALREADY_ON_FLAG;
 			booleanValues |= DATA_ACQUISITION_RDY;
-			incomingSerialValue = 'a';
 		}
 		
 		//if(sensorValueReady || (potValueReady && lightSensorSent))
 		if(IS_SENSOR_VAL_RDY || (POTENTIOMETER_VAL_RDY && lightSensorSent))
 		{
+			if(AVR32_USART_IER_TXRDY_MASK != (AVR32_USART_IER_TXRDY_MASK & AVR32_USART1.ier))
+			{
+				booleanValues |= DEPASSEMENT_UART;
+			}
 			AVR32_USART1.ier = AVR32_USART_IER_TXRDY_MASK;
 		}
 		
@@ -370,25 +372,24 @@ int main (void)
 			switch(current)
 			{
 				case 1:
-					tc_write_rc(tc0, TC_CHANNEL_2, (FPBA >> 4) / 2000);
+					tc_write_rc(tc0, TC_CHANNEL_2, FOURKHERTZ);
 					current = 2;
 					break;
 				case 2:
-					tc_write_rc(tc0, TC_CHANNEL_2, (FPBA >> 4) / 1000);
+					tc_write_rc(tc0, TC_CHANNEL_2, ONEKHERTZ);
 					current = 1;
 					break;
 			}
-			//TOGGLE_LED(LED3); Can't use it since used by displacement
 		}
-		
+				
 		// Dépassements
 		if(IS_DEPASSEMENT_ADC)
 		{
-			LED_Toggle(LED3);
+			LED_On(LED3);
 		}
 		if(IS_DEPASSEMENT_UART)
 		{
-			LED_Toggle(LED4);
+			LED_On(LED4);
 		}
 	}
 }
