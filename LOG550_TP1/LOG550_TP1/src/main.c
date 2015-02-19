@@ -23,13 +23,13 @@
 #define P_MED						AVR32_INTC_INT2
 #define P_LOW						AVR32_INTC_INT1
 #define P_LOWEST					AVR32_INTC_INT0
-#define FPBA                        FOSC0
+#define FPBA                        (FOSC0 >> 4)
 #define FALSE						0
 
-#define FOURHERTZ					46875
-#define TWOKHERTZ					94
-#define ONEKHERTZ					188
-#define FOURKHERTZ					47
+#define FOURHERTZ_TC5				FPBA / 40 //Every second, 4 clicks
+#define TWOKHERTZ_TC4				FPBA / 2000
+#define ONEKHERTZ_TC4				FPBA / 1000
+#define FOURKHERTZ_TC4				FPBA / 4500
 
 
 
@@ -106,7 +106,7 @@ static const tc_waveform_opt_t WAVEFORM_OPT_1 =
 	.cpcstop  = FALSE,
 	.burst    = FALSE,
 	.clki     = FALSE,
-	.tcclks   = TC_CLOCK_SOURCE_TC4
+	.tcclks   = TC_CLOCK_SOURCE_TC5
 };
 
 static const tc_waveform_opt_t WAVEFORM_OPT_2 =
@@ -273,12 +273,12 @@ void timercounter_init(void)
 	
 	tc_init_waveform(tc0, &WAVEFORM_OPT_1);
 	//4Hz = 4 cycles / second
-	tc_write_rc(tc0, TC_CHANNEL_1, FOURHERTZ);
+	tc_write_rc(tc0, TC_CHANNEL_1, FOURHERTZ_TC5);
 	tc_configure_interrupts(tc0, TC_CHANNEL_1, &TC_INTERRUPT_0);
 	tc_start(tc0, TC_CHANNEL_1);
 	
 	tc_init_waveform(tc0, &WAVEFORM_OPT_2);
-	tc_write_rc(tc0, TC_CHANNEL_2, TWOKHERTZ);
+	tc_write_rc(tc0, TC_CHANNEL_2, TWOKHERTZ_TC4);
 	tc_configure_interrupts(tc0, TC_CHANNEL_2, &TC_INTERRUPT_0);
 	tc_start(tc0, TC_CHANNEL_2);
 }
@@ -314,7 +314,7 @@ void intialization(void)
 	
 	Enable_global_interrupt();	
 	
-	LED_Toggle(LED1);
+	//LED_Toggle(LED1);
 	LED_Off(LED4);
 	print_dbg("Taper S ou X pour demarrer l'acquisition de donnees: \n");
 }
@@ -350,7 +350,7 @@ int main (void)
 		
 		if((incomingSerialValue == 's' || incomingSerialValue == 'S') && !IS_ALREADY_ON)
 		{
-			(LED_Test(LED0) == true) ? LED_On(LED1) : false;
+			(LED_Test(LED0) == true) ? LED_On(LED1) : LED_Off(LED1);
 			booleanValues |= ALREADY_ON_FLAG;
 			booleanValues |= DATA_ACQUISITION_RDY;
 		}
@@ -358,7 +358,7 @@ int main (void)
 		//if(sensorValueReady || (potValueReady && lightSensorSent))
 		if(IS_SENSOR_VAL_RDY || (POTENTIOMETER_VAL_RDY && lightSensorSent))
 		{
-			if(AVR32_USART_IER_TXRDY_MASK != (AVR32_USART_IER_TXRDY_MASK & AVR32_USART1.ier))
+			if(AVR32_USART1.csr & (AVR32_USART_CSR_TXRDY_MASK))
 			{
 				booleanValues |= DEPASSEMENT_UART;
 			}
@@ -372,11 +372,11 @@ int main (void)
 			switch(current)
 			{
 				case 1:
-					tc_write_rc(tc0, TC_CHANNEL_2, FOURKHERTZ);
+					tc_write_rc(tc0, TC_CHANNEL_2, TWOKHERTZ_TC4);
 					current = 2;
 					break;
 				case 2:
-					tc_write_rc(tc0, TC_CHANNEL_2, ONEKHERTZ);
+					tc_write_rc(tc0, TC_CHANNEL_2, ONEKHERTZ_TC4);
 					current = 1;
 					break;
 			}
