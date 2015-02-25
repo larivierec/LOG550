@@ -27,9 +27,9 @@
 #define FALSE						0
 
 #define FOURHERTZ_TC5				FPBA / 40 //Every second, 4 clicks
-#define TWOKHERTZ_TC4				FPBA / 2000
-#define ONEKHERTZ_TC4				FPBA / 1000
-#define FOURKHERTZ_TC4				FPBA / 4500
+#define TWOKHERTZ_TC4				FPBA / 4000
+#define ONEKHERTZ_TC4				FPBA / 2000
+#define FOURKHERTZ_TC4				FPBA / 9000
 
 
 
@@ -179,6 +179,11 @@ static void irq_led(void)
 __attribute__((__interrupt__))
 static void irq_serial_communication(void)
 {	
+	
+	if(AVR32_USART1.csr & (AVR32_USART_CSR_TXRDY_MASK))
+	{
+		booleanValues |= DEPASSEMENT_UART;
+	}
 	//Receiving
 	if (AVR32_USART1.csr & (AVR32_USART_CSR_RXRDY_MASK))
 	{
@@ -358,10 +363,10 @@ int main (void)
 		//if(sensorValueReady || (potValueReady && lightSensorSent))
 		if(IS_SENSOR_VAL_RDY || (POTENTIOMETER_VAL_RDY && lightSensorSent))
 		{
-			if(AVR32_USART1.csr & (AVR32_USART_CSR_TXRDY_MASK))
+			/*if(AVR32_USART1.csr & (AVR32_USART_CSR_TXRDY_MASK))
 			{
 				booleanValues |= DEPASSEMENT_UART;
-			}
+			}*/
 			AVR32_USART1.ier = AVR32_USART_IER_TXRDY_MASK;
 		}
 		
