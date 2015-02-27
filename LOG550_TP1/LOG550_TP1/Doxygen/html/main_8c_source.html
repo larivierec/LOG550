@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.9.1"/>
+<title>LOG550:  Fichier source de main.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">LOG550
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.9.1 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&#160;associées</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">main.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="main_8c.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">*        Fichier:  main.c</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">*        Auteur:   Christopher Lariviere, Samy Lemcelli</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">*        Date:     2/26/2015</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">/** @mainpage</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">&lt;center&gt;&lt;b&gt;Laboratoire de systemes informatiques en temps reel&lt;/b&gt;&lt;/center&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">@author &lt;ul&gt; &lt;li&gt; Christopher Lariviere &lt;li&gt;Samy Lemcelli &lt;/ul&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">@section MainSection1 Description</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">Le but du systeme sur le microcontroleur est de convertir le signal analogique</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">en donnees numeriques avec l&#39;ADC et de les transferer vers le PC par lien en serie soit en:</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">Le but du premier laboratoire de LOG550 est d&#39;utilise les nombreuses drivers du cadriciel ASF (Atmel Software Framework).</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">Ce cadriciel nous permettra d&#39;explorer davantage et comprendre ce qui se passe sur un microcontrolleur de ce type.</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">-</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">&lt;ul&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">&lt;li&gt; 57600 bauds &lt;/li&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">&lt;li&gt; 38400 bauds &lt;/li&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">&lt;/ul&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">- &lt;b&gt;Logiciel necessaire&lt;/b&gt; : AVR-Studio 6.2, AVR-GCC, Oscilloscope JAVA</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">- &lt;b&gt;Materiel necessaire&lt;/b&gt; : ATmega32 on EVK1100 board</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">- &lt;b&gt;Librairies/Modules necessaire&lt;/b&gt; :</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">&lt;ul&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">&lt;li&gt; ADC (Analog to Digital Converter - Driver)</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">&lt;li&gt; PM (Power Manager - Driver)</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">&lt;li&gt; GPIO (General Purpose Input/Output - Driver)</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">&lt;li&gt; INTC (Interrupt Controller - Driver)</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">&lt;li&gt; TC   (Timer/Counter - Driver)</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">&lt;li&gt; USART        (Universal Synchronous/Asynchronous Receiver/Transmitter - Driver + Debug Strings Service)</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">&lt;li&gt; Generic Board Support        (Driver)</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">&lt;/ul&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">@file main.c Contient le programme de LOG550 developpe par Christopher Lariviere et Samy Lemcelli</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="asf_8h.html">asf.h</a>&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;compiler.h&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define TC_CHANNEL_1                            0</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#define TC_CHANNEL_2                            1</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define TIMER_COUNTER                           (&amp;AVR32_TC)</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#define TIMER_COUNTER_1_IRQ                     AVR32_TC_IRQ0</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#define TIMER_COUNTER_2_IRQ                     AVR32_TC_IRQ1</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="main_8c.html#ace3512e685f1c61843669c18d2382d9d">   50</a></span>&#160;<span class="preprocessor">#define P_HIGH                                          AVR32_INTC_INT3 </span><span class="comment">/**&lt; La priorite la plus haute, utilise pour l&#39;initialisation des IRQ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="main_8c.html#a1587f04093aba6cbeb09f8e961f12d3e">   51</a></span>&#160;<span class="preprocessor">#define P_MED                                           AVR32_INTC_INT2 </span><span class="comment">/**&lt; La priorite haute, utilise pour l&#39;initialisation des IRQ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="main_8c.html#a6e629cdeeadd926c593ea9bdde376cf4">   52</a></span>&#160;<span class="preprocessor">#define P_LOW                                           AVR32_INTC_INT1 </span><span class="comment">/**&lt; La priorite moyenne, utilise pour l&#39;initialisation des IRQ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="main_8c.html#a56b382f54fa8dab8021fa08edba733ef">   53</a></span>&#160;<span class="preprocessor">#define P_LOWEST                                        AVR32_INTC_INT0 </span><span class="comment">/**&lt; La priorite plus basse, utilise pour l&#39;initialisation des IRQ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="main_8c.html#a0431a0eb62758b130bfe4c39783b1800">   54</a></span>&#160;<span class="preprocessor">#define FPBA                                            (FOSC0 &gt;&gt; 4) </span><span class="comment">/**&lt; Correspond a 12MHz / 32 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">   55</a></span>&#160;<span class="preprocessor">#define FALSE                                           0                        </span><span class="comment">/**&lt; Fake booleen */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="main_8c.html#af192cf810df45bf7e772a326736568b7">   57</a></span>&#160;<span class="preprocessor">#define LIGHT_CHANNEL                           2                       </span><span class="comment">/**&lt; Le numero du channel de la lumiere */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="main_8c.html#a96460a4dcbf2c7407733d4aff54b7b25">   58</a></span>&#160;<span class="preprocessor">#define POT_CHANNEL                                     1                       </span><span class="comment">/**&lt; Le numero du channel du potentiometre */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="main_8c.html#a557fddd32c12a5ad952d8d3212363c9f">   60</a></span>&#160;<span class="preprocessor">#define FOURHERTZ_TC5                           (FOSC0 &gt;&gt; 7) / 8 </span><span class="comment">/**&lt; A chaque seconde, toggle deux fois avec l&#39;horloage TC5 \n Le calcul = 12MHz bit shift 7 = (12MHz / 128) / 8 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="main_8c.html#a0bb29498dd83e09b74616135f8628b80">   61</a></span>&#160;<span class="preprocessor">#define TWOKHERTZ_TC4                           FPBA / 4000              </span><span class="comment">/**&lt; A chaque seconde, recupere 2000 echantillons par canal avec l&#39;horloge TC4 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="main_8c.html#a668818c4f4fac4f7e9a907e6ce89e58d">   62</a></span>&#160;<span class="preprocessor">#define ONEKHERTZ_TC4                           FPBA / 2000              </span><span class="comment">/**&lt; A chaque seconde, recupere 1000 echantillons par canal avec l&#39;horloge TC4 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="main_8c.html#a7e6fef011c0080df5228c2f14c0c4b45">   63</a></span>&#160;<span class="preprocessor">#define FOURKHERTZ_TC4                          FPBA / 9000              </span><span class="comment">/**&lt; A chaque seconde, recupere 2000 echantillons par canal avec l&#39;horloge TC4 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">/************************************************************************/</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">/* Le numero du pin du push button                                                                              */</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">/************************************************************************/</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="main_8c.html#ad3aab34359ca762119019e7316759938">   71</a></span>&#160;<span class="preprocessor">#define PUSH_BUTTON_0                           88      </span><span class="comment">/**&lt; Le numero du GPIO PB_0 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">/************************************************************************/</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">/* Usable boolean bits                                                                                                  */</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">/************************************************************************/</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="main_8c.html#afd8683e34d25a8cb75fb5956c8d1155e">   77</a></span>&#160;<span class="preprocessor">#define PUSHED_PB_0                                     1 &lt;&lt; 0 </span><span class="comment">/**&lt; correspond au bit 0 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="main_8c.html#ab0206e35fc1f8d820ad2d34d1f6136b7">   78</a></span>&#160;<span class="preprocessor">#define DEPASSEMENT_UART                        1 &lt;&lt; 1 </span><span class="comment">/**&lt; correspond au bit 1 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="main_8c.html#a38e4428b83a9c956eb779cbaadcde712">   79</a></span>&#160;<span class="preprocessor">#define DEPASSEMENT_ADC                         1 &lt;&lt; 2 </span><span class="comment">/**&lt; correspond au bit 2 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="main_8c.html#a4e8b1c68943e6ae0b6499e323ffc1e0e">   80</a></span>&#160;<span class="preprocessor">#define INDICATION_LED                          1 &lt;&lt; 3 </span><span class="comment">/**&lt; correspond au bit 3 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="main_8c.html#aa1c526d92c397da46e23d66771dabd9b">   81</a></span>&#160;<span class="preprocessor">#define SENSOR_VAL_RDY                          1 &lt;&lt; 4 </span><span class="comment">/**&lt; correspond au bit 4 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="main_8c.html#a421031cd0db546b69efc9965bfee8860">   82</a></span>&#160;<span class="preprocessor">#define POTENTIOMETER_VAL_RDY           1 &lt;&lt; 5 </span><span class="comment">/**&lt; correspond au bit 5 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="main_8c.html#a1d96a66609ad75bb30f9a1ba92f259da">   83</a></span>&#160;<span class="preprocessor">#define START_ADC_CONVERSION            1 &lt;&lt; 6 </span><span class="comment">/**&lt; correspond au bit 6 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="main_8c.html#a1ec8b2cdf6778f80669f5bf1edb4f190">   84</a></span>&#160;<span class="preprocessor">#define DATA_ACQUISITION_RDY            1 &lt;&lt; 7 </span><span class="comment">/**&lt; correspond au bit 7 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="main_8c.html#afc8b6429ef42c278b1d64db5e8654f3c">   85</a></span>&#160;<span class="preprocessor">#define ALREADY_ON_FLAG                         1 &lt;&lt; 8 </span><span class="comment">/**&lt; correspond au bit 8 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="main_8c.html#ab3c56eebf23f4acaabb98da5cf879d88">   86</a></span>&#160;<span class="preprocessor">#define USART_RDY                                       1 &lt;&lt; 9 </span><span class="comment">/**&lt; correspond au bit 9 de la variable booleanValues */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="main_8c.html#aa028449c46868496e02ea58f34b6195e">   88</a></span>&#160;<span class="preprocessor">#define CLEAR_PUSH_BUTTON                       (booleanValues &amp;= ~0x01)        </span><span class="comment">/**&lt;Reset le bit 1 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="main_8c.html#a29a8be37beefddfd6766aa1596919c6b">   89</a></span>&#160;<span class="preprocessor">#define CLEAR_DEPASSEMENT_UART_FLAG     (booleanValues &amp;= ~0x02)        </span><span class="comment">/**&lt;Reset le bit 2 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="main_8c.html#adc8305669c881ecc80dc8ebb9a79e652">   90</a></span>&#160;<span class="preprocessor">#define CLEAR_DEPASSEMENT_ADC_FLAG      (booleanValues &amp;= ~0x04)        </span><span class="comment">/**&lt;Reset le bit 3 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="main_8c.html#a7731856d2037e858f3d90a6be0b5f87b">   91</a></span>&#160;<span class="preprocessor">#define CLEAR_LED_FLAG                          (booleanValues &amp;= ~0x08)        </span><span class="comment">/**&lt;Reset le bit 4 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="main_8c.html#a98904ff421e60128c795d99c5f269f72">   92</a></span>&#160;<span class="preprocessor">#define CLEAR_SENSOR_FLAG                       (booleanValues &amp;= ~0x10)        </span><span class="comment">/**&lt;Reset le bit 5 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="main_8c.html#ab4e3d08e29e1775b4f2d002213314400">   93</a></span>&#160;<span class="preprocessor">#define CLEAR_POTENTIOMETER_FLAG        (booleanValues &amp;= ~0x20)        </span><span class="comment">/**&lt;Reset le bit 6 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="main_8c.html#a4e28edcacc75a294e1ae53529d24266c">   94</a></span>&#160;<span class="preprocessor">#define CLEAR_ADC_CONVERSION_FLAG       (booleanValues &amp;= ~0x40)        </span><span class="comment">/**&lt;Reset le bit 7 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="main_8c.html#ab35d4f566ef2446a5a4e0b9ed4a14ca8">   95</a></span>&#160;<span class="preprocessor">#define CLEAR_DATA_ACQUISITION_FLAG     (booleanValues &amp;= ~0x80)        </span><span class="comment">/**&lt;Reset le bit 8 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="main_8c.html#a81e51807dcbdb044a1940ec8d76ea762">   96</a></span>&#160;<span class="preprocessor">#define CLEAR_ALREADY_ON                        (booleanValues &amp;= ~0x100)       </span><span class="comment">/**&lt;Reset le bit 9 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="main_8c.html#a9ccd351672503cc2536d361585b1f22c">   97</a></span>&#160;<span class="preprocessor">#define CLEAR_USART_RDY                         (booleanValues &amp;= ~0x200)       </span><span class="comment">/**&lt;Reset le bit 10 de notre variable de flag */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="main_8c.html#a68dac192db9e1a8b2735577083c6db2e">   99</a></span>&#160;<span class="preprocessor">#define IS_PUSHED                                       (booleanValues == (booleanValues | PUSHED_PB_0))                        </span><span class="comment">/**&lt; Verifie si le bit 1 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="main_8c.html#a4ad87ab2f509e6a1abdc0f19826c44e3">  100</a></span>&#160;<span class="preprocessor">#define IS_DEPASSEMENT_UART                     (booleanValues == (booleanValues | DEPASSEMENT_UART))           </span><span class="comment">/**&lt; Verifie si le bit 2 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="main_8c.html#a6fe24128e84c94f937f3b7fa114c6cfb">  101</a></span>&#160;<span class="preprocessor">#define IS_DEPASSEMENT_ADC                      (booleanValues == (booleanValues | DEPASSEMENT_ADC))            </span><span class="comment">/**&lt; Verifie si le bit 3 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="main_8c.html#a1675b13057e5ae3fb361e87d4053de4b">  102</a></span>&#160;<span class="preprocessor">#define IS_LED                                          (booleanValues == (booleanValues | INDICATION_LED))                     </span><span class="comment">/**&lt; Verifie si le bit 4 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="main_8c.html#ac61b466709b4d98329342c8155ab174d">  103</a></span>&#160;<span class="preprocessor">#define IS_SENSOR_VAL_RDY                       (booleanValues == (booleanValues | SENSOR_VAL_RDY))                     </span><span class="comment">/**&lt; Verifie si le bit 5 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="main_8c.html#ad08bae171d1e98fff37cbf514bf1e469">  104</a></span>&#160;<span class="preprocessor">#define IS_POTENTIOMETER_VAL_RDY        (booleanValues == (booleanValues | POTENTIOMETER_VAL_RDY))      </span><span class="comment">/**&lt; Verifie si le bit 6 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="main_8c.html#adc49051e9c759561ffc5fbbbf9fd0e42">  105</a></span>&#160;<span class="preprocessor">#define IS_ADC_STARTED                          (booleanValues == (booleanValues | START_ADC_CONVERSION))       </span><span class="comment">/**&lt; Verifie si le bit 7 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="main_8c.html#a3ff2b2dbfe564919d7f656ea3879c017">  106</a></span>&#160;<span class="preprocessor">#define IS_DATA_ACQUISITION_RDY         (booleanValues == (booleanValues | DATA_ACQUISITION_RDY))       </span><span class="comment">/**&lt; Verifie si le bit 8 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="main_8c.html#aad86e85c4e9d764b4ba9f9c8b187e7f9">  107</a></span>&#160;<span class="preprocessor">#define IS_ALREADY_ON                           (booleanValues == (booleanValues | ALREADY_ON_FLAG))            </span><span class="comment">/**&lt; Verifie si le bit 9 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="main_8c.html#ab3f21dfe580605b3aae265a586edded4">  108</a></span>&#160;<span class="preprocessor">#define IS_USART_RDY                            (booleanValues == (booleanValues | USART_RDY))                          </span><span class="comment">/**&lt; Verifie si le bit 10 est active */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="main_8c.html#abdb3a341bdad6a7f2ade1f1adb0e5b7a">  110</a></span>&#160;<span class="preprocessor">#define TOGGLE_LED(ledNumber)                   (LED_Toggle(ledNumber))  </span><span class="comment">/**&lt; Toggle le GPIO LEDNUMBER */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="main_8c.html#a643b78b4afadd279a92e0ca84f0b0298">  111</a></span>&#160;<span class="preprocessor">#define GET_GPIOPORT_NUMBER(GPIONUMBER) (GPIONUMBER / 32)                </span><span class="comment">/**&lt; Retourne le PORT du numero GPIO */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">/** Variables globales */</span><span class="comment"></span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">/** @brief Configuration du peripherique TC et ces variables globales */</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> tc_waveform_opt_t WAVEFORM_OPT_1 =</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;{</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        .channel  = TC_CHANNEL_1,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        .bswtrg   = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        .beevt    = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        .bcpc     = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        .bcpb     = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        .aswtrg   = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        .aeevt    = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        .acpc     = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        .acpa     = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        .wavsel   = TC_WAVEFORM_SEL_UP_MODE_RC_TRIGGER,</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        .enetrg   = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        .eevt     = 0,</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        .eevtedg  = TC_SEL_NO_EDGE,</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        .cpcdis   = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        .cpcstop  = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        .burst    = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        .clki     = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        .tcclks   = TC_CLOCK_SOURCE_TC5</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;};</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> tc_waveform_opt_t WAVEFORM_OPT_2 =</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;{</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        .channel  = TC_CHANNEL_2,</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        .bswtrg   = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        .beevt    = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        .bcpc     = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        .bcpb     = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        .aswtrg   = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        .aeevt    = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        .acpc     = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        .acpa     = TC_EVT_EFFECT_NOOP,</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        .wavsel   = TC_WAVEFORM_SEL_UP_MODE_RC_TRIGGER,</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        .enetrg   = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        .eevt     = 0,</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        .eevtedg  = TC_SEL_NO_EDGE,</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        .cpcdis   = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        .cpcstop  = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        .burst    = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        .clki     = <a class="code" href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>,</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        .tcclks   = TC_CLOCK_SOURCE_TC4</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;};</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> tc_interrupt_t TC_INTERRUPT_0 =</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;{</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        .etrgs = 0,</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        .ldrbs = 0,</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        .ldras = 0,</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        .cpcs  = 1,</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        .cpbs  = 0,</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        .cpas  = 0,</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        .lovrs = 0,</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        .covfs = 0</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;};</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> gpio_map_t USART_GPIO_MAP =</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;{</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        {AVR32_USART1_RXD_0_0_PIN, AVR32_USART1_RXD_0_0_FUNCTION},</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        {AVR32_USART1_TXD_0_0_PIN, AVR32_USART1_TXD_0_0_FUNCTION}</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;};</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;U32 incomingSerialValue;</div>
+<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="main_8c.html#af477da61f3ea5b6e81c525f9d56e7307">  183</a></span>&#160;<span class="keyword">volatile</span> U32 <a class="code" href="main_8c.html#af477da61f3ea5b6e81c525f9d56e7307">lightSensorValue</a> = 0;      <span class="comment">/**&lt; Contient la valeur de la capteur de lumiere */</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno"><a class="line" href="main_8c.html#a27159c06d9afc9f753c9d6dd3fc9978b">  184</a></span>&#160;<span class="keyword">volatile</span> U32 <a class="code" href="main_8c.html#a27159c06d9afc9f753c9d6dd3fc9978b">potValue</a> = 0;                      <span class="comment">/**&lt; Contient la valeur du potentiometre */</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword">volatile</span> avr32_tc_t *tc0 = TIMER_COUNTER;</div>
+<div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">  186</a></span>&#160;<span class="keyword">volatile</span> U32 <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> = 0; <span class="comment">/**&lt; Variable 32 bit non-signe contenant tout nos flags pour notre programme */</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="keyword">volatile</span> <span class="keywordtype">int</span> current =1;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno"><a class="line" href="main_8c.html#a5c3eda656384c3976ce643501a2bf1a4">  190</a></span>&#160;<a class="code" href="main_8c.html#a5c3eda656384c3976ce643501a2bf1a4">__attribute__</a>((__interrupt__)) </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;static <span class="keywordtype">void</span> irq_led(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;{</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="comment">// La lecture du registre SR efface le fanion de l&#39;interruption.</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        tc_read_sr(TIMER_COUNTER, TC_CHANNEL_1);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#a4e8b1c68943e6ae0b6499e323ffc1e0e">INDICATION_LED</a>;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;}</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment"> Fonction : irq_serial_communication(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment">/** @brief Interrupt Request provenant d&#39;un lecteur un char ou de l&#39;envoi d&#39;une valeur pret par le ADC</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<a class="code" href="main_8c.html#a5c3eda656384c3976ce643501a2bf1a4">__attribute__</a>((__interrupt__))</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;static <span class="keywordtype">void</span> irq_serial_communication(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;{</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="comment">//Receiving</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <span class="keywordflow">if</span> (AVR32_USART1.csr &amp; (AVR32_USART_CSR_RXRDY_MASK))</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        {</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                incomingSerialValue = (AVR32_USART1.rhr &amp; AVR32_USART_RHR_RXCHR_MASK);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <span class="comment">//transmitting</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        {</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                AVR32_USART1.idr = AVR32_USART_IDR_TXRDY_MASK;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        }</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#ab3c56eebf23f4acaabb98da5cf879d88">USART_RDY</a>;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;}</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="comment"> Fonction : irq_push_button(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="comment">/** @brief Interrupt Request lorsque nous appuyons sur le PB0</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<a class="code" href="main_8c.html#a5c3eda656384c3976ce643501a2bf1a4">__attribute__</a>((__interrupt__)) </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;static <span class="keywordtype">void</span> irq_push_button(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;{</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> | <a class="code" href="main_8c.html#afd8683e34d25a8cb75fb5956c8d1155e">PUSHED_PB_0</a>)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        {</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#afd8683e34d25a8cb75fb5956c8d1155e">PUSHED_PB_0</a>;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        gpio_clear_pin_interrupt_flag(<a class="code" href="main_8c.html#ad3aab34359ca762119019e7316759938">PUSH_BUTTON_0</a>);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;}</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="comment"> Fonction : irq_adc_channel(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="comment">/** @brief Interrupt Request provenant d&#39;un EOC (End of Conversion) soit pour la lumiere ou le potentiometre</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<a class="code" href="main_8c.html#a5c3eda656384c3976ce643501a2bf1a4">__attribute__</a>((__interrupt__)) </div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;static <span class="keywordtype">void</span> irq_adc_channel(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;{</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        <span class="comment">// Check depassement du UART par le ADC</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#ac61b466709b4d98329342c8155ab174d">IS_SENSOR_VAL_RDY</a> &amp;&amp; <a class="code" href="main_8c.html#ad08bae171d1e98fff37cbf514bf1e469">IS_POTENTIOMETER_VAL_RDY</a>)</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        {</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#a38e4428b83a9c956eb779cbaadcde712">DEPASSEMENT_ADC</a>;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        }</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        </div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        U32 statusRegister = AVR32_ADC.sr;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        </div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="comment">//potentiometer conversion done</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="keywordflow">if</span>(statusRegister &amp; AVR32_ADC_IER_EOC1_MASK)</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        {</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#ad08bae171d1e98fff37cbf514bf1e469">IS_POTENTIOMETER_VAL_RDY</a>      &amp;&amp; !(AVR32_USART1.csr &amp; (AVR32_USART_CSR_TXRDY_MASK)))</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;                        <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#ab0206e35fc1f8d820ad2d34d1f6136b7">DEPASSEMENT_UART</a>;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;                }</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;                <a class="code" href="main_8c.html#a27159c06d9afc9f753c9d6dd3fc9978b">potValue</a> = AVR32_ADC.cdr1;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;                <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#a421031cd0db546b69efc9965bfee8860">POTENTIOMETER_VAL_RDY</a>;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        }</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        <span class="comment">//light sensor conversion done</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        <span class="keywordflow">if</span>(statusRegister &amp; AVR32_ADC_IER_EOC2_MASK)</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        {</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#ac61b466709b4d98329342c8155ab174d">IS_SENSOR_VAL_RDY</a> &amp;&amp; !(AVR32_USART1.csr &amp; (AVR32_USART_CSR_TXRDY_MASK)))</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                {</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                        <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#ab0206e35fc1f8d820ad2d34d1f6136b7">DEPASSEMENT_UART</a>;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                }</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;                <a class="code" href="main_8c.html#af477da61f3ea5b6e81c525f9d56e7307">lightSensorValue</a> = AVR32_ADC.cdr2;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;                <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#aa1c526d92c397da46e23d66771dabd9b">SENSOR_VAL_RDY</a>;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        }</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        <a class="code" href="main_8c.html#a4e28edcacc75a294e1ae53529d24266c">CLEAR_ADC_CONVERSION_FLAG</a>;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;}</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="comment"> Fonction : irq_adc_timer(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="comment">/** @brief Interrupt Request provenant du Timer du ADC.</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<a class="code" href="main_8c.html#a5c3eda656384c3976ce643501a2bf1a4">__attribute__</a>((__interrupt__)) </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;static <span class="keywordtype">void</span> irq_adc_timer(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;{</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        tc_read_sr(TIMER_COUNTER, TC_CHANNEL_2);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <span class="keywordflow">if</span>(!<a class="code" href="main_8c.html#adc49051e9c759561ffc5fbbbf9fd0e42">IS_ADC_STARTED</a>)</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#a1d96a66609ad75bb30f9a1ba92f259da">START_ADC_CONVERSION</a>;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        }</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;}</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="comment"> Fonction : adc_init(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="comment">/** @brief Initialise le ADC pour recuperer les 8 bits de chaque canaux configurer.\n</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="comment">                   Light channel = 2 et Pot channel = 1 avec une interruption de priorite 3</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="main_8c.html#a2b815e6730e8723a6d1d06d9ef8f31c0">  300</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="main_8c.html#a2b815e6730e8723a6d1d06d9ef8f31c0">adc_init</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;{</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        pcl_switch_to_osc(PCL_OSC0, FOSC0, OSC0_STARTUP);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        <span class="comment">//Configure the ADC to use 8 bit values instead of 10</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        AVR32_ADC.mr |= 1 &lt;&lt; AVR32_ADC_LOWRES_OFFSET;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <span class="comment">//Enable the Light Sensor</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        AVR32_ADC.cher = 1 &lt;&lt; <a class="code" href="main_8c.html#af192cf810df45bf7e772a326736568b7">LIGHT_CHANNEL</a>;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="comment">//Enable the potentiometer</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        AVR32_ADC.cher = 1 &lt;&lt; <a class="code" href="main_8c.html#a96460a4dcbf2c7407733d4aff54b7b25">POT_CHANNEL</a>;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        </div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        </div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        INTC_register_interrupt(&amp;irq_adc_channel,AVR32_ADC_IRQ,<a class="code" href="main_8c.html#ace3512e685f1c61843669c18d2382d9d">P_HIGH</a>);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        AVR32_ADC.ier = AVR32_ADC_IER_EOC2_MASK | AVR32_ADC_IER_EOC1_MASK;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;}</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="comment"> Fonction : timercounter_init(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="comment">/** @brief Initialise les deux timer counter a priorite basse.</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
+<div class="line"><a name="l00322"></a><span class="lineno"><a class="line" href="main_8c.html#a429e12b145fefca4fbcde26757d4e693">  322</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="main_8c.html#a429e12b145fefca4fbcde26757d4e693">timercounter_init</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;{</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        pcl_switch_to_osc(PCL_OSC0, FOSC0, OSC0_STARTUP);</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        INTC_register_interrupt(&amp;irq_adc_timer,TIMER_COUNTER_2_IRQ,<a class="code" href="main_8c.html#a56b382f54fa8dab8021fa08edba733ef">P_LOWEST</a>);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        INTC_register_interrupt(&amp;irq_led, TIMER_COUNTER_1_IRQ, <a class="code" href="main_8c.html#a56b382f54fa8dab8021fa08edba733ef">P_LOWEST</a>);</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        current = 2;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        </div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        tc_init_waveform(tc0, &amp;WAVEFORM_OPT_1);</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        </div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        tc_write_rc(tc0, TC_CHANNEL_1, <a class="code" href="main_8c.html#a557fddd32c12a5ad952d8d3212363c9f">FOURHERTZ_TC5</a>);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        tc_configure_interrupts(tc0, TC_CHANNEL_1, &amp;TC_INTERRUPT_0);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        tc_start(tc0, TC_CHANNEL_1);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        </div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        tc_init_waveform(tc0, &amp;WAVEFORM_OPT_2);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        tc_write_rc(tc0, TC_CHANNEL_2, <a class="code" href="main_8c.html#a0bb29498dd83e09b74616135f8628b80">TWOKHERTZ_TC4</a>);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        tc_configure_interrupts(tc0, TC_CHANNEL_2, &amp;TC_INTERRUPT_0);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        tc_start(tc0, TC_CHANNEL_2);</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;}</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="comment"> Fonction : usart_init(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="comment">/** @brief Initialise le USART</span></div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;</div>
+<div class="line"><a name="l00349"></a><span class="lineno"><a class="line" href="main_8c.html#a6aa3b4e2a5362cd032ed6b218afe58f6">  349</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="main_8c.html#a6aa3b4e2a5362cd032ed6b218afe58f6">usart_init</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;{</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        pm_switch_to_osc0(&amp;AVR32_PM, FOSC0, OSC0_STARTUP);</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        gpio_enable_module(USART_GPIO_MAP,<span class="keyword">sizeof</span>(USART_GPIO_MAP) / <span class="keyword">sizeof</span>(USART_GPIO_MAP[0]));</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        init_dbg_rs232_ex(57600,FOSC0);</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        </div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        INTC_register_interrupt(&amp;irq_serial_communication, AVR32_USART1_IRQ, <a class="code" href="main_8c.html#a56b382f54fa8dab8021fa08edba733ef">P_LOWEST</a>);</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        AVR32_USART1.ier = AVR32_USART_IER_RXRDY_MASK;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;}</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="comment"> Fonction : push_button_init(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="comment">/** @brief Initialise le bouton du GPIO88 =&gt; PB0</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
+<div class="line"><a name="l00366"></a><span class="lineno"><a class="line" href="main_8c.html#ab3239c705b6b1747327bdbae5a078bff">  366</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="main_8c.html#ab3239c705b6b1747327bdbae5a078bff">push_button_init</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;{</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        INTC_register_interrupt(&amp;irq_push_button,(AVR32_GPIO_IRQ_0+<a class="code" href="main_8c.html#ad3aab34359ca762119019e7316759938">PUSH_BUTTON_0</a>/8),AVR32_INTC_INT0);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;        gpio_enable_gpio_pin(<a class="code" href="main_8c.html#ad3aab34359ca762119019e7316759938">PUSH_BUTTON_0</a>);</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        gpio_enable_pin_interrupt(<a class="code" href="main_8c.html#ad3aab34359ca762119019e7316759938">PUSH_BUTTON_0</a>,GPIO_FALLING_EDGE);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;}</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="comment"> Fonction : initialization(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="comment">/** @brief Initialise les 4 IRQ et deux timer clock sources</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;</div>
+<div class="line"><a name="l00379"></a><span class="lineno"><a class="line" href="main_8c.html#a3f23a26ab7b91dbd8909ea4fcb722fa1">  379</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="main_8c.html#a3f23a26ab7b91dbd8909ea4fcb722fa1">initialization</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;{</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        Disable_global_interrupt();</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        </div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;        INTC_init_interrupts();</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        </div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        <a class="code" href="main_8c.html#a2b815e6730e8723a6d1d06d9ef8f31c0">adc_init</a>();</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        <a class="code" href="main_8c.html#ab3239c705b6b1747327bdbae5a078bff">push_button_init</a>();</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <a class="code" href="main_8c.html#a6aa3b4e2a5362cd032ed6b218afe58f6">usart_init</a>();</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        <a class="code" href="main_8c.html#a429e12b145fefca4fbcde26757d4e693">timercounter_init</a>();</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        </div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;        Enable_global_interrupt();</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        </div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        LED_Off(LED4);</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;        print_dbg(<span class="stringliteral">&quot;\nTaper S ou X pour demarrer l&#39;acquisition de donnees: \n&quot;</span>);</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;}</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="comment">/*************************************************************************</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="comment"> Fonction : main(void)  */</span><span class="comment"></span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="comment">/** @brief Lance l&#39;initialisation et debute l&#39;arriere plan pour le microcontrolleur</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="comment">*************************************************************************/</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
+<div class="line"><a name="l00403"></a><span class="lineno"><a class="line" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">  403</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;{</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;        <a class="code" href="main_8c.html#a3f23a26ab7b91dbd8909ea4fcb722fa1">initialization</a>();</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;        </div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        <span class="keywordflow">while</span>(1)</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;        {</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#adc49051e9c759561ffc5fbbbf9fd0e42">IS_ADC_STARTED</a> &amp;&amp; <a class="code" href="main_8c.html#a3ff2b2dbfe564919d7f656ea3879c017">IS_DATA_ACQUISITION_RDY</a>)</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;                {</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;                        AVR32_ADC.cr = AVR32_ADC_START_MASK;</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;                }</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;                </div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#a1675b13057e5ae3fb361e87d4053de4b">IS_LED</a>)</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;                {</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;                        <a class="code" href="main_8c.html#abdb3a341bdad6a7f2ade1f1adb0e5b7a">TOGGLE_LED</a>(LED0);</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                        <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#a3ff2b2dbfe564919d7f656ea3879c017">IS_DATA_ACQUISITION_RDY</a>)</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;                        {</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;                                <a class="code" href="main_8c.html#abdb3a341bdad6a7f2ade1f1adb0e5b7a">TOGGLE_LED</a>(LED1);</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;                        }</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;                        <a class="code" href="main_8c.html#a7731856d2037e858f3d90a6be0b5f87b">CLEAR_LED_FLAG</a>;</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;                }</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;                <span class="comment">//Les valeurs du UART</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;                </div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;                <span class="keywordflow">if</span>((incomingSerialValue == <span class="charliteral">&#39;x&#39;</span> || incomingSerialValue == <span class="charliteral">&#39;X&#39;</span>) &amp;&amp; <a class="code" href="main_8c.html#aad86e85c4e9d764b4ba9f9c8b187e7f9">IS_ALREADY_ON</a>)</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;                {</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;                        <a class="code" href="main_8c.html#ab35d4f566ef2446a5a4e0b9ed4a14ca8">CLEAR_DATA_ACQUISITION_FLAG</a>;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;                        <a class="code" href="main_8c.html#a81e51807dcbdb044a1940ec8d76ea762">CLEAR_ALREADY_ON</a>;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;                        LED_Off(LED1);</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;                }</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;                </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;                <span class="keywordflow">if</span>((incomingSerialValue == <span class="charliteral">&#39;s&#39;</span> || incomingSerialValue == <span class="charliteral">&#39;S&#39;</span>) &amp;&amp; !<a class="code" href="main_8c.html#aad86e85c4e9d764b4ba9f9c8b187e7f9">IS_ALREADY_ON</a>)</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;                {</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;                        (LED_Test(LED0) == <span class="keyword">true</span>) ? LED_On(LED1) : LED_Off(LED1);</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;                        <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#afc8b6429ef42c278b1d64db5e8654f3c">ALREADY_ON_FLAG</a>;</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;                        <a class="code" href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a> |= <a class="code" href="main_8c.html#a1ec8b2cdf6778f80669f5bf1edb4f190">DATA_ACQUISITION_RDY</a>;</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;                }</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;                </div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;                </div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#ab3f21dfe580605b3aae265a586edded4">IS_USART_RDY</a>)</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;                {</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;                        <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#ac61b466709b4d98329342c8155ab174d">IS_SENSOR_VAL_RDY</a> &amp;&amp; <a class="code" href="main_8c.html#ab3f21dfe580605b3aae265a586edded4">IS_USART_RDY</a>)</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;                        {</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;                                </div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;                                AVR32_USART1.thr =      <a class="code" href="main_8c.html#af477da61f3ea5b6e81c525f9d56e7307">lightSensorValue</a> | 0x01;</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;                                <a class="code" href="main_8c.html#a98904ff421e60128c795d99c5f269f72">CLEAR_SENSOR_FLAG</a>;</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;                                <a class="code" href="main_8c.html#a9ccd351672503cc2536d361585b1f22c">CLEAR_USART_RDY</a>;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;                                </div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;                                AVR32_USART1.ier = AVR32_USART_IER_TXRDY_MASK;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;                        }</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;                        <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#ad08bae171d1e98fff37cbf514bf1e469">IS_POTENTIOMETER_VAL_RDY</a>      &amp;&amp; <a class="code" href="main_8c.html#ab3f21dfe580605b3aae265a586edded4">IS_USART_RDY</a>)</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;                        {</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;                                AVR32_USART1.thr = <a class="code" href="main_8c.html#a27159c06d9afc9f753c9d6dd3fc9978b">potValue</a> &amp; ~0x01;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;                                <a class="code" href="main_8c.html#ab4e3d08e29e1775b4f2d002213314400">CLEAR_POTENTIOMETER_FLAG</a>;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                                <a class="code" href="main_8c.html#a9ccd351672503cc2536d361585b1f22c">CLEAR_USART_RDY</a>;</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;                                </div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;                                AVR32_USART1.ier = AVR32_USART_IER_TXRDY_MASK;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;                        }</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;                }</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;                </div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;                <span class="comment">//If we pressed the PB0, we change the hertz</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#a68dac192db9e1a8b2735577083c6db2e">IS_PUSHED</a>)</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;                {</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;                        <a class="code" href="main_8c.html#aa028449c46868496e02ea58f34b6195e">CLEAR_PUSH_BUTTON</a>;</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;                        <span class="keywordflow">switch</span>(current)</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;                        {</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;                                <span class="keywordflow">case</span> 1:</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;                                tc_write_rc(tc0, TC_CHANNEL_2, <a class="code" href="main_8c.html#a0bb29498dd83e09b74616135f8628b80">TWOKHERTZ_TC4</a>);</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;                                current = 2;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;                                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;                                <span class="keywordflow">case</span> 2:</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;                                tc_write_rc(tc0, TC_CHANNEL_2, <a class="code" href="main_8c.html#a668818c4f4fac4f7e9a907e6ce89e58d">ONEKHERTZ_TC4</a>);</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;                                current = 1;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;                                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;                        }</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;                }</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;                </div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;                <span class="comment">// Dépassements</span></div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#a6fe24128e84c94f937f3b7fa114c6cfb">IS_DEPASSEMENT_ADC</a>)</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;                {</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;                        LED_On(LED3);</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;                }</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="main_8c.html#a4ad87ab2f509e6a1abdc0f19826c44e3">IS_DEPASSEMENT_UART</a>)</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;                {</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;                        LED_On(LED4);</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;                }</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;        }</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;}</div>
+<div class="ttc" id="main_8c_html_a98904ff421e60128c795d99c5f269f72"><div class="ttname"><a href="main_8c.html#a98904ff421e60128c795d99c5f269f72">CLEAR_SENSOR_FLAG</a></div><div class="ttdeci">#define CLEAR_SENSOR_FLAG</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00092">main.c:92</a></div></div>
+<div class="ttc" id="main_8c_html_af477da61f3ea5b6e81c525f9d56e7307"><div class="ttname"><a href="main_8c.html#af477da61f3ea5b6e81c525f9d56e7307">lightSensorValue</a></div><div class="ttdeci">volatile U32 lightSensorValue</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00183">main.c:183</a></div></div>
+<div class="ttc" id="main_8c_html_ab35d4f566ef2446a5a4e0b9ed4a14ca8"><div class="ttname"><a href="main_8c.html#ab35d4f566ef2446a5a4e0b9ed4a14ca8">CLEAR_DATA_ACQUISITION_FLAG</a></div><div class="ttdeci">#define CLEAR_DATA_ACQUISITION_FLAG</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00095">main.c:95</a></div></div>
+<div class="ttc" id="main_8c_html_ab0206e35fc1f8d820ad2d34d1f6136b7"><div class="ttname"><a href="main_8c.html#ab0206e35fc1f8d820ad2d34d1f6136b7">DEPASSEMENT_UART</a></div><div class="ttdeci">#define DEPASSEMENT_UART</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00078">main.c:78</a></div></div>
+<div class="ttc" id="main_8c_html_afd8683e34d25a8cb75fb5956c8d1155e"><div class="ttname"><a href="main_8c.html#afd8683e34d25a8cb75fb5956c8d1155e">PUSHED_PB_0</a></div><div class="ttdeci">#define PUSHED_PB_0</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00077">main.c:77</a></div></div>
+<div class="ttc" id="main_8c_html_a3ff2b2dbfe564919d7f656ea3879c017"><div class="ttname"><a href="main_8c.html#a3ff2b2dbfe564919d7f656ea3879c017">IS_DATA_ACQUISITION_RDY</a></div><div class="ttdeci">#define IS_DATA_ACQUISITION_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00106">main.c:106</a></div></div>
+<div class="ttc" id="main_8c_html_ab4e3d08e29e1775b4f2d002213314400"><div class="ttname"><a href="main_8c.html#ab4e3d08e29e1775b4f2d002213314400">CLEAR_POTENTIOMETER_FLAG</a></div><div class="ttdeci">#define CLEAR_POTENTIOMETER_FLAG</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00093">main.c:93</a></div></div>
+<div class="ttc" id="main_8c_html_aad86e85c4e9d764b4ba9f9c8b187e7f9"><div class="ttname"><a href="main_8c.html#aad86e85c4e9d764b4ba9f9c8b187e7f9">IS_ALREADY_ON</a></div><div class="ttdeci">#define IS_ALREADY_ON</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00107">main.c:107</a></div></div>
+<div class="ttc" id="main_8c_html_ac61b466709b4d98329342c8155ab174d"><div class="ttname"><a href="main_8c.html#ac61b466709b4d98329342c8155ab174d">IS_SENSOR_VAL_RDY</a></div><div class="ttdeci">#define IS_SENSOR_VAL_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00103">main.c:103</a></div></div>
+<div class="ttc" id="main_8c_html_a4e28edcacc75a294e1ae53529d24266c"><div class="ttname"><a href="main_8c.html#a4e28edcacc75a294e1ae53529d24266c">CLEAR_ADC_CONVERSION_FLAG</a></div><div class="ttdeci">#define CLEAR_ADC_CONVERSION_FLAG</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00094">main.c:94</a></div></div>
+<div class="ttc" id="main_8c_html_a7731856d2037e858f3d90a6be0b5f87b"><div class="ttname"><a href="main_8c.html#a7731856d2037e858f3d90a6be0b5f87b">CLEAR_LED_FLAG</a></div><div class="ttdeci">#define CLEAR_LED_FLAG</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00091">main.c:91</a></div></div>
+<div class="ttc" id="main_8c_html_a2b815e6730e8723a6d1d06d9ef8f31c0"><div class="ttname"><a href="main_8c.html#a2b815e6730e8723a6d1d06d9ef8f31c0">adc_init</a></div><div class="ttdeci">void adc_init(void)</div><div class="ttdoc">Initialise le ADC pour recuperer les 8 bits de chaque canaux configurer.  Light channel = 2 et Pot ch...</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00300">main.c:300</a></div></div>
+<div class="ttc" id="main_8c_html_aa93f0eb578d23995850d61f7d61c55c1"><div class="ttname"><a href="main_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a></div><div class="ttdeci">#define FALSE</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00055">main.c:55</a></div></div>
+<div class="ttc" id="main_8c_html_ad08bae171d1e98fff37cbf514bf1e469"><div class="ttname"><a href="main_8c.html#ad08bae171d1e98fff37cbf514bf1e469">IS_POTENTIOMETER_VAL_RDY</a></div><div class="ttdeci">#define IS_POTENTIOMETER_VAL_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00104">main.c:104</a></div></div>
+<div class="ttc" id="main_8c_html_a38e4428b83a9c956eb779cbaadcde712"><div class="ttname"><a href="main_8c.html#a38e4428b83a9c956eb779cbaadcde712">DEPASSEMENT_ADC</a></div><div class="ttdeci">#define DEPASSEMENT_ADC</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00079">main.c:79</a></div></div>
+<div class="ttc" id="main_8c_html_af192cf810df45bf7e772a326736568b7"><div class="ttname"><a href="main_8c.html#af192cf810df45bf7e772a326736568b7">LIGHT_CHANNEL</a></div><div class="ttdeci">#define LIGHT_CHANNEL</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00057">main.c:57</a></div></div>
+<div class="ttc" id="main_8c_html_ab3c56eebf23f4acaabb98da5cf879d88"><div class="ttname"><a href="main_8c.html#ab3c56eebf23f4acaabb98da5cf879d88">USART_RDY</a></div><div class="ttdeci">#define USART_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00086">main.c:86</a></div></div>
+<div class="ttc" id="main_8c_html_a27159c06d9afc9f753c9d6dd3fc9978b"><div class="ttname"><a href="main_8c.html#a27159c06d9afc9f753c9d6dd3fc9978b">potValue</a></div><div class="ttdeci">volatile U32 potValue</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00184">main.c:184</a></div></div>
+<div class="ttc" id="main_8c_html_a96460a4dcbf2c7407733d4aff54b7b25"><div class="ttname"><a href="main_8c.html#a96460a4dcbf2c7407733d4aff54b7b25">POT_CHANNEL</a></div><div class="ttdeci">#define POT_CHANNEL</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00058">main.c:58</a></div></div>
+<div class="ttc" id="main_8c_html_ad3aab34359ca762119019e7316759938"><div class="ttname"><a href="main_8c.html#ad3aab34359ca762119019e7316759938">PUSH_BUTTON_0</a></div><div class="ttdeci">#define PUSH_BUTTON_0</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00071">main.c:71</a></div></div>
+<div class="ttc" id="main_8c_html_a1675b13057e5ae3fb361e87d4053de4b"><div class="ttname"><a href="main_8c.html#a1675b13057e5ae3fb361e87d4053de4b">IS_LED</a></div><div class="ttdeci">#define IS_LED</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00102">main.c:102</a></div></div>
+<div class="ttc" id="main_8c_html_adc49051e9c759561ffc5fbbbf9fd0e42"><div class="ttname"><a href="main_8c.html#adc49051e9c759561ffc5fbbbf9fd0e42">IS_ADC_STARTED</a></div><div class="ttdeci">#define IS_ADC_STARTED</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00105">main.c:105</a></div></div>
+<div class="ttc" id="main_8c_html_a4ad87ab2f509e6a1abdc0f19826c44e3"><div class="ttname"><a href="main_8c.html#a4ad87ab2f509e6a1abdc0f19826c44e3">IS_DEPASSEMENT_UART</a></div><div class="ttdeci">#define IS_DEPASSEMENT_UART</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00100">main.c:100</a></div></div>
+<div class="ttc" id="main_8c_html_a5c3eda656384c3976ce643501a2bf1a4"><div class="ttname"><a href="main_8c.html#a5c3eda656384c3976ce643501a2bf1a4">__attribute__</a></div><div class="ttdeci">__attribute__((__interrupt__))</div><div class="ttdoc">Interrupt Request provenant d&#39;un lecteur un char ou de l&#39;envoi d&#39;une valeur pret par le ADC...</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00190">main.c:190</a></div></div>
+<div class="ttc" id="main_8c_html_abdb3a341bdad6a7f2ade1f1adb0e5b7a"><div class="ttname"><a href="main_8c.html#abdb3a341bdad6a7f2ade1f1adb0e5b7a">TOGGLE_LED</a></div><div class="ttdeci">#define TOGGLE_LED(ledNumber)</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00110">main.c:110</a></div></div>
+<div class="ttc" id="main_8c_html_ace3512e685f1c61843669c18d2382d9d"><div class="ttname"><a href="main_8c.html#ace3512e685f1c61843669c18d2382d9d">P_HIGH</a></div><div class="ttdeci">#define P_HIGH</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00050">main.c:50</a></div></div>
+<div class="ttc" id="main_8c_html_ab3239c705b6b1747327bdbae5a078bff"><div class="ttname"><a href="main_8c.html#ab3239c705b6b1747327bdbae5a078bff">push_button_init</a></div><div class="ttdeci">void push_button_init(void)</div><div class="ttdoc">Initialise le bouton du GPIO88 => PB0. </div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00366">main.c:366</a></div></div>
+<div class="ttc" id="main_8c_html_a4e8b1c68943e6ae0b6499e323ffc1e0e"><div class="ttname"><a href="main_8c.html#a4e8b1c68943e6ae0b6499e323ffc1e0e">INDICATION_LED</a></div><div class="ttdeci">#define INDICATION_LED</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00080">main.c:80</a></div></div>
+<div class="ttc" id="main_8c_html_a9ccd351672503cc2536d361585b1f22c"><div class="ttname"><a href="main_8c.html#a9ccd351672503cc2536d361585b1f22c">CLEAR_USART_RDY</a></div><div class="ttdeci">#define CLEAR_USART_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00097">main.c:97</a></div></div>
+<div class="ttc" id="main_8c_html_a668818c4f4fac4f7e9a907e6ce89e58d"><div class="ttname"><a href="main_8c.html#a668818c4f4fac4f7e9a907e6ce89e58d">ONEKHERTZ_TC4</a></div><div class="ttdeci">#define ONEKHERTZ_TC4</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00062">main.c:62</a></div></div>
+<div class="ttc" id="main_8c_html_a1d96a66609ad75bb30f9a1ba92f259da"><div class="ttname"><a href="main_8c.html#a1d96a66609ad75bb30f9a1ba92f259da">START_ADC_CONVERSION</a></div><div class="ttdeci">#define START_ADC_CONVERSION</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00083">main.c:83</a></div></div>
+<div class="ttc" id="main_8c_html_a6fe24128e84c94f937f3b7fa114c6cfb"><div class="ttname"><a href="main_8c.html#a6fe24128e84c94f937f3b7fa114c6cfb">IS_DEPASSEMENT_ADC</a></div><div class="ttdeci">#define IS_DEPASSEMENT_ADC</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00101">main.c:101</a></div></div>
+<div class="ttc" id="main_8c_html_a56b382f54fa8dab8021fa08edba733ef"><div class="ttname"><a href="main_8c.html#a56b382f54fa8dab8021fa08edba733ef">P_LOWEST</a></div><div class="ttdeci">#define P_LOWEST</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00053">main.c:53</a></div></div>
+<div class="ttc" id="main_8c_html_a81e51807dcbdb044a1940ec8d76ea762"><div class="ttname"><a href="main_8c.html#a81e51807dcbdb044a1940ec8d76ea762">CLEAR_ALREADY_ON</a></div><div class="ttdeci">#define CLEAR_ALREADY_ON</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00096">main.c:96</a></div></div>
+<div class="ttc" id="main_8c_html_a6aa3b4e2a5362cd032ed6b218afe58f6"><div class="ttname"><a href="main_8c.html#a6aa3b4e2a5362cd032ed6b218afe58f6">usart_init</a></div><div class="ttdeci">void usart_init(void)</div><div class="ttdoc">Initialise le USART. </div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00349">main.c:349</a></div></div>
+<div class="ttc" id="main_8c_html_a557fddd32c12a5ad952d8d3212363c9f"><div class="ttname"><a href="main_8c.html#a557fddd32c12a5ad952d8d3212363c9f">FOURHERTZ_TC5</a></div><div class="ttdeci">#define FOURHERTZ_TC5</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00060">main.c:60</a></div></div>
+<div class="ttc" id="main_8c_html_afc8b6429ef42c278b1d64db5e8654f3c"><div class="ttname"><a href="main_8c.html#afc8b6429ef42c278b1d64db5e8654f3c">ALREADY_ON_FLAG</a></div><div class="ttdeci">#define ALREADY_ON_FLAG</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00085">main.c:85</a></div></div>
+<div class="ttc" id="main_8c_html_a0bb29498dd83e09b74616135f8628b80"><div class="ttname"><a href="main_8c.html#a0bb29498dd83e09b74616135f8628b80">TWOKHERTZ_TC4</a></div><div class="ttdeci">#define TWOKHERTZ_TC4</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00061">main.c:61</a></div></div>
+<div class="ttc" id="main_8c_html_a68dac192db9e1a8b2735577083c6db2e"><div class="ttname"><a href="main_8c.html#a68dac192db9e1a8b2735577083c6db2e">IS_PUSHED</a></div><div class="ttdeci">#define IS_PUSHED</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00099">main.c:99</a></div></div>
+<div class="ttc" id="main_8c_html_a8d358796db1aab74df401dfef62c7678"><div class="ttname"><a href="main_8c.html#a8d358796db1aab74df401dfef62c7678">booleanValues</a></div><div class="ttdeci">volatile U32 booleanValues</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00186">main.c:186</a></div></div>
+<div class="ttc" id="main_8c_html_aa1c526d92c397da46e23d66771dabd9b"><div class="ttname"><a href="main_8c.html#aa1c526d92c397da46e23d66771dabd9b">SENSOR_VAL_RDY</a></div><div class="ttdeci">#define SENSOR_VAL_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00081">main.c:81</a></div></div>
+<div class="ttc" id="asf_8h_html"><div class="ttname"><a href="asf_8h.html">asf.h</a></div><div class="ttdoc">Autogenerated API include file for the Atmel Software Framework (ASF) </div></div>
+<div class="ttc" id="main_8c_html_a1ec8b2cdf6778f80669f5bf1edb4f190"><div class="ttname"><a href="main_8c.html#a1ec8b2cdf6778f80669f5bf1edb4f190">DATA_ACQUISITION_RDY</a></div><div class="ttdeci">#define DATA_ACQUISITION_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00084">main.c:84</a></div></div>
+<div class="ttc" id="main_8c_html_ab3f21dfe580605b3aae265a586edded4"><div class="ttname"><a href="main_8c.html#ab3f21dfe580605b3aae265a586edded4">IS_USART_RDY</a></div><div class="ttdeci">#define IS_USART_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00108">main.c:108</a></div></div>
+<div class="ttc" id="main_8c_html_a840291bc02cba5474a4cb46a9b9566fe"><div class="ttname"><a href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a></div><div class="ttdeci">int main(void)</div><div class="ttdoc">Lance l&#39;initialisation et debute l&#39;arriere plan pour le microcontrolleur. </div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00403">main.c:403</a></div></div>
+<div class="ttc" id="main_8c_html_a3f23a26ab7b91dbd8909ea4fcb722fa1"><div class="ttname"><a href="main_8c.html#a3f23a26ab7b91dbd8909ea4fcb722fa1">initialization</a></div><div class="ttdeci">void initialization(void)</div><div class="ttdoc">Initialise les 4 IRQ et deux timer clock sources. </div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00379">main.c:379</a></div></div>
+<div class="ttc" id="main_8c_html_a421031cd0db546b69efc9965bfee8860"><div class="ttname"><a href="main_8c.html#a421031cd0db546b69efc9965bfee8860">POTENTIOMETER_VAL_RDY</a></div><div class="ttdeci">#define POTENTIOMETER_VAL_RDY</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00082">main.c:82</a></div></div>
+<div class="ttc" id="main_8c_html_a429e12b145fefca4fbcde26757d4e693"><div class="ttname"><a href="main_8c.html#a429e12b145fefca4fbcde26757d4e693">timercounter_init</a></div><div class="ttdeci">void timercounter_init(void)</div><div class="ttdoc">Initialise les deux timer counter a priorite basse. </div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00322">main.c:322</a></div></div>
+<div class="ttc" id="main_8c_html_aa028449c46868496e02ea58f34b6195e"><div class="ttname"><a href="main_8c.html#aa028449c46868496e02ea58f34b6195e">CLEAR_PUSH_BUTTON</a></div><div class="ttdeci">#define CLEAR_PUSH_BUTTON</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00088">main.c:88</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Jeudi 26 Février 2015 20:50:19 pour LOG550 par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.9.1
+</small></address>
+</body>
+</html>
