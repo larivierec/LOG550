@@ -1,0 +1,16 @@
+#Thu Mar 13 12:29:52 EDT 2008
+avr32.managedbuild.config.gnu.exe.debug.2013728650/internalBuilder/enabled=false
+avr32.managedbuild.config.gnu.exe.debug.2013728650/internalBuilder/ignoreErr=true
+avr32.managedbuild.config.gnu.exe.debug.377343866/internalBuilder/enabled=false
+avr32.managedbuild.config.gnu.exe.debug.377343866/internalBuilder/ignoreErr=true
+avr32.managedbuild.config.gnu.exe.release.1290620595/internalBuilder/enabled=false
+avr32.managedbuild.config.gnu.exe.release.1290620595/internalBuilder/ignoreErr=true
+avr32.managedbuild.config.gnu.exe.release.744412493/internalBuilder/enabled=false
+avr32.managedbuild.config.gnu.exe.release.744412493/internalBuilder/ignoreErr=true
+eclipse.preferences.version=1
+environment/buildEnvironmentInclude/avr32.managedbuild.config.gnu.exe.debug.2013728650=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<environment>\r\n<variable name\="CPATH" operation\="remove"/>\r\n<variable name\="C_INCLUDE_PATH" operation\="remove"/>\r\n</environment>\r\n
+environment/buildEnvironmentInclude/avr32.managedbuild.config.gnu.exe.debug.377343866=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<environment>\r\n<variable name\="CPATH" operation\="remove"/>\r\n<variable name\="C_INCLUDE_PATH" operation\="remove"/>\r\n</environment>\r\n
+environment/buildEnvironmentLibrary/avr32.managedbuild.config.gnu.exe.debug.2013728650=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<environment>\r\n<variable name\="LIBRARY_PATH" operation\="remove"/>\r\n</environment>\r\n
+environment/buildEnvironmentLibrary/avr32.managedbuild.config.gnu.exe.debug.377343866=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<environment>\r\n<variable name\="LIBRARY_PATH" operation\="remove"/>\r\n</environment>\r\n
+environment/project=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<environment/>\r\n
+environment/project/avr32.managedbuild.config.gnu.exe.debug.377343866=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<environment/>\r\n
