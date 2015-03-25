@@ -6,24 +6,12 @@
 
 /**** Reservation du STACK de chaque tache ************************************************/
 
-#define ADC_START_FLAG	1 << 0
-#define ALARM_FLAG		1 << 1
-#define LED1_STATE		1 << 2
-
-#define CLEAR_ADC_FLAG	(booleanFlags &= ~0x01)
-#define CLEAR_ALARM_FLAG (booleanFlags &= ~0x02)
-#define CLEAR_LED1_STATE (booleanFlags &= ~0x04)
-
-#define IS_ADC_STARTED	(booleanFlags == (booleanFlags | ADC_START_FLAG))
-#define IS_ALARM_ON		(booleanFlags == (booleanFlags | ALARM_FLAG))
-#define IS_LED1_ON		(booleanFlags == (booleanFlags | LED1_STATE))
-
 #define LIGHT_CHANNEL				2			/**< Le numero du channel de la lumiere */
 #define POT_CHANNEL					1			/**< Le numero du channel du potentiometre */
 
 volatile CPU_INT32U booleanFlags = 0;
 
-#define OS_TASK_STK_SIZE 256
+#define OS_TASK_STK_SIZE 512
 
 OS_STK  LED_Stack[OS_TASK_STK_SIZE];
 OS_STK  UART_RX_Stack[OS_TASK_STK_SIZE];
@@ -43,11 +31,13 @@ static	void  Alarm_msgQ(void *p_arg);
 OS_EVENT	*Start_Sem;		// Conversion has started
 OS_EVENT	*UART_TX_Sem;		// Semaphore
 OS_EVENT	*Alarm_Sem;		// Alarm has been triggered or not
+OS_EVENT	*LED1_Sem;
+OS_EVENT	*SEM_ADC_Alternate;
 
 OS_EVENT	*Mbox1;		// Semaphore
 OS_EVENT	*ADCMsg;		// Mailbox
 
-void  *ADCMsgFIFO[3];		// Ma MessageQueue (FIFO)
+void  *ADCMsgFIFO[4];		// Ma MessageQueue (FIFO)
 void Init_IO_Usager(void);          // Fonction definie localement
 
 /**** Fonction principale main()***********************************************************/
@@ -71,9 +61,11 @@ int  main (void)
 	Start_Sem   = OSSemCreate(0);	// Conversion has started
 	UART_TX_Sem = OSSemCreate(0);	// Transfer Ready
 	Alarm_Sem = OSSemCreate(0);		// Alarm has been triggered or not
+	LED1_Sem = OSSemCreate(0);		// LED1 state for LED2
+	SEM_ADC_Alternate = OSSemCreate(0); // State of the ADC
 	
 	Mbox1   = OSMboxCreate(NULL);   // MailBox,   initialisation
-	ADCMsg   = OSQCreate(ADCMsgFIFO, 3); // Message Queue of the ADC Initialized
+	ADCMsg   = OSQCreate(ADCMsgFIFO, 4); // Message Queue of the ADC Initialized
 	
 	
 
@@ -102,20 +94,21 @@ static  void  LED_flash (void *p_arg)
 		
 		
 		LED_Toggle(1);
-		if(IS_LED1_ON) // Have to track LED1 state. It was done by LED.h in old lab.
+		if(LED1_Sem->OSEventCnt == 1) // Have to track LED1 state. It was done by LED.h in old lab.
 		{
-			CLEAR_LED1_STATE;
+			OSSemSet(LED1_Sem,0,NULL);
 		}
 		else
 		{
-			booleanFlags |= LED1_STATE;
+			OSSemSet(LED1_Sem,1,NULL);
 		}
 		
-		if(IS_ADC_STARTED){
+		if(Start_Sem->OSEventCnt == 1)
+		{
 			LED_Toggle(2);
 		}
 		
-		OSTimeDly(200);// 200ms == 5 fois secondes
+		OSTimeDly(100);// 200ms == 5 fois secondes
 	}
 }
 /******************************************************************************************/
@@ -129,12 +122,10 @@ static  void  UART_Cmd_RX (void *p_arg)
 		
 		if(MboxDataRX == 's'){
 			OSSemSet(Start_Sem,1,NULL);
-			booleanFlags |= 0x01;
-			(IS_LED1_ON) ? LED_On(2) : LED_Off(2);
+			(LED1_Sem->OSEventCnt == 1) ? LED_On(2) : LED_Off(2);
 		}
 		if(MboxDataRX =='x'){
 			OSSemSet(Start_Sem,0,NULL);
-			CLEAR_ADC_FLAG;
 			LED_Off(2);
 		}
 		
@@ -158,33 +149,36 @@ static  void  ADC_Cmd (void *p_arg)
 	(void)p_arg;
 	
 	while (1) {
-		if(ADCMsg->OSEventCnt >= 3)
+		if(ADCMsg->OSEventCnt >= 4)
 		{
 			OSSemPost(Alarm_Sem);
 		}
 		
-		if(IS_ADC_STARTED)
+		if(Start_Sem->OSEventCnt == 1)
 		{
-			LED_Toggle(4); // This is just to get a visual queue. Must delete.
-			unsigned int statusRegister = AVR32_ADC.sr;
-			if(statusRegister & AVR32_ADC_IER_EOC1_MASK)
+			AVR32_ADC.cr = AVR32_ADC_START_MASK;
+			 // This is just to get a visual queue. Must delete.
+			CPU_INT32U statusRegister = AVR32_ADC.sr;			
+			if((statusRegister & AVR32_ADC_IER_EOC1_MASK) && SEM_ADC_Alternate->OSEventCnt == 0)
 			{
+				OSSemSet(SEM_ADC_Alternate,1,NULL);
 				OSQPost(ADCMsg, (AVR32_ADC.cdr1 | 0x01));
 			}
 			
-			if(statusRegister & AVR32_ADC_IER_EOC2_MASK)
+			if((statusRegister & AVR32_ADC_IER_EOC2_MASK) && SEM_ADC_Alternate->OSEventCnt == 1)
 			{
+				OSSemSet(SEM_ADC_Alternate,0,NULL);
 				OSQPost(ADCMsg, (AVR32_ADC.cdr2 & ~0x01));
 			}
 		}
 		
-		OSTimeDly(100);        // Delai en TICKS (1 TICKS=1milisec)
+		OSTimeDly(1);        // Delai en TICKS (1 TICKS=1milisec)
 	}
 }
 /******************************************************************************************/
 
 static	void Alarm_msgQ(void *p_arg){
-	(void)p_arg; //cry more noob
+	(void)p_arg;
 	OSSemPend(Alarm_Sem,0,NULL);
 	LED_Toggle(3);
 }
@@ -193,6 +187,14 @@ void Init_IO_Usager(void)
 {
 	BSP_USART_Init(1,57600) ; //Initialise USART1 at 57600bauds, voir BSP.c
 	BSP_USART_printf(1, "\nPrototype 2 : LOG550\n Samy Lemcelli, Christopher Lariviere");
+	
+	AVR32_ADC.mr |= 1 << AVR32_ADC_LOWRES_OFFSET;
+	
+	//Enable the Light Sensor
+	AVR32_ADC.cher = 1 << LIGHT_CHANNEL;
+	//Enable the potentiometer
+	AVR32_ADC.cher = 1 << POT_CHANNEL;
+	
 }
 
 
