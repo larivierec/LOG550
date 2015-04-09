@@ -18,6 +18,7 @@ OS_STK  UART_RX_Stack[OS_TASK_STK_SIZE];
 OS_STK  UART_TX_Stack[OS_TASK_STK_SIZE];
 OS_STK  ADC_Stack[OS_TASK_STK_SIZE];
 OS_STK  Alarm_Stack[OS_TASK_STK_SIZE];
+OS_STK  Bonus_Strack[OS_TASK_STK_SIZE];
 
 
 static  void  LED_flash(void *p_arg);
@@ -25,6 +26,7 @@ static  void  UART_Cmd_RX(void *p_arg);
 static  void  UART_SendSample(void *p_arg);
 static  void  ADC_Cmd(void *p_arg);
 static	void  Alarm_msgQ(void *p_arg);
+static	void  Bonus_Thread(void *p_arg);
 
 /** Semaphores */
 
@@ -50,13 +52,15 @@ int  main (void)
 	CPU_IntDis();       /* Desactive toute les interrupts pendant l'initialisation  */
 	OSInit();           /* Initialise "uC/OS-II, The Real-Time Kernel"              */
 	Init_IO_Usager();   // Initialisation des differents I/O par l'usager
-
+	
+	
 	/* Creation de toute les taches...a des priorites differentes (1<prio<25) */
 	OSTaskCreate(LED_flash, NULL, (OS_STK *)&LED_Stack[OS_TASK_STK_SIZE-1], 1);
 	OSTaskCreate(UART_Cmd_RX, NULL, (OS_STK *)&UART_RX_Stack[OS_TASK_STK_SIZE-1], 2);
 	OSTaskCreate(UART_SendSample, NULL, (OS_STK *)&UART_TX_Stack[OS_TASK_STK_SIZE-1], 3);
 	OSTaskCreate(ADC_Cmd, NULL, (OS_STK *)&ADC_Stack[OS_TASK_STK_SIZE-1], 4);
 	OSTaskCreate(Alarm_msgQ, NULL,(OS_STK *)&Alarm_Stack[OS_TASK_STK_SIZE-1], 5);
+	OSTaskCreate(Bonus_Thread, NULL,(OS_STK *)&Bonus_Strack[OS_TASK_STK_SIZE-1], 6);
 
 	Start_Sem   = OSSemCreate(0);	// Conversion has started
 	UART_TX_Sem = OSSemCreate(0);	// Transfer Ready
@@ -86,12 +90,13 @@ static  void  LED_flash (void *p_arg)
 	(void)p_arg;          // Pour eviter le warnings en GCC
 	CPU_INT08U   err, MsgQDataRX;
 
+
+	OSStatInit();
 	
 
 	/*---Fin de l'initialisation----------*/
 
 	while (1) {           // Tache, une boucle infinie.
-		
 		
 		LED_Toggle(1);
 		if(LED1_Sem->OSEventCnt == 1) // Have to track LED1 state. It was done by LED.h in old lab.
@@ -108,6 +113,7 @@ static  void  LED_flash (void *p_arg)
 			LED_Toggle(2);
 		}
 		
+
 		OSTimeDly(100);// 200ms == 5 fois secondes
 	}
 }
@@ -131,6 +137,36 @@ static  void  UART_Cmd_RX (void *p_arg)
 		
 		OSTimeDly(200); // Shouldn't spam check so delay
 	}
+}
+/******************************************************************************************/
+static void Bonus_Thread(void *p_arg)
+{
+	(void)p_arg;
+	char buffer[8];
+	while(1)
+	{
+		OSTimeDly(500);
+		BSP_USART_printf(0, "\033[2J");
+		BSP_USART_printf(0, "\033[2H");
+		CPU_INT32U usage = 100-(OSIdleCtr/OSIdleCtrMax);
+		
+		snprintf(buffer, sizeof(usage), "%d", usage);
+		//OSIdleCtr = 0;
+		BSP_USART_printf(0, "CPU Usage Percentage (our calculation): \%");
+		BSP_USART_printf(0, buffer);
+		BSP_USART_printf(0, "\033[2H\n");
+		snprintf(buffer, sizeof(usage), "%d", OSCPUUsage);
+		BSP_USART_printf(0, "CPU Usage Percentage (uCOS-II calculation): \%");
+		BSP_USART_printf(0, buffer);
+		BSP_USART_printf(0, "\033[2H\n\n");
+		BSP_USART_printf(0, "Number of Context Switches: ");
+		snprintf(buffer, 8, "%d", OSCtxSwCtr);
+		OSCtxSwCtr = 0;
+		BSP_USART_printf(0, buffer);
+		BSP_USART_printf(0, "\n");
+
+	}
+	
 }
 /******************************************************************************************/
 static  void  UART_SendSample (void *p_arg)
@@ -186,8 +222,9 @@ static	void Alarm_msgQ(void *p_arg){
 void Init_IO_Usager(void)
 {
 	BSP_USART_Init(1,57600) ; //Initialise USART1 at 57600bauds, voir BSP.c
+	BSP_USART_Init(0,57600) ; //Initialise USART0 at 115200 bauds pour les points bonis
 	BSP_USART_printf(1, "\nPrototype 2 : LOG550\n Samy Lemcelli, Christopher Lariviere");
-	
+
 	AVR32_ADC.mr |= 1 << AVR32_ADC_LOWRES_OFFSET;
 	
 	//Enable the Light Sensor
