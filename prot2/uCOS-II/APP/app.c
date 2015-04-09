@@ -148,17 +148,12 @@ static void Bonus_Thread(void *p_arg)
 		OSTimeDly(500);
 		BSP_USART_printf(0, "\033[2J");
 		BSP_USART_printf(0, "\033[2H");
-		CPU_INT32U usage = 100-(OSIdleCtr/OSIdleCtrMax);
-		
-		snprintf(buffer, sizeof(usage), "%d", usage);
-		//OSIdleCtr = 0;
-		BSP_USART_printf(0, "CPU Usage Percentage (our calculation): \%");
+
+		BSP_USART_printf(0, "\033[2H");
+		snprintf(buffer, 8, "%d", OSCPUUsage);
+		BSP_USART_printf(0, "CPU Usage Percentage : ");
 		BSP_USART_printf(0, buffer);
 		BSP_USART_printf(0, "\033[2H\n");
-		snprintf(buffer, sizeof(usage), "%d", OSCPUUsage);
-		BSP_USART_printf(0, "CPU Usage Percentage (uCOS-II calculation): \%");
-		BSP_USART_printf(0, buffer);
-		BSP_USART_printf(0, "\033[2H\n\n");
 		BSP_USART_printf(0, "Number of Context Switches: ");
 		snprintf(buffer, 8, "%d", OSCtxSwCtr);
 		OSCtxSwCtr = 0;
@@ -222,7 +217,7 @@ static	void Alarm_msgQ(void *p_arg){
 void Init_IO_Usager(void)
 {
 	BSP_USART_Init(1,57600) ; //Initialise USART1 at 57600bauds, voir BSP.c
-	BSP_USART_Init(0,57600) ; //Initialise USART0 at 115200 bauds pour les points bonis
+	BSP_USART_Init(0,115200) ; //Initialise USART0 at 115200 bauds pour les points bonis
 	BSP_USART_printf(1, "\nPrototype 2 : LOG550\n Samy Lemcelli, Christopher Lariviere");
 
 	AVR32_ADC.mr |= 1 << AVR32_ADC_LOWRES_OFFSET;
