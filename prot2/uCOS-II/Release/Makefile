@@ -243,42 +243,42 @@ LIB_DEP+=
 APP/%.o: ../APP/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 BSP/%.o: ../BSP/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uC-CPU/%.o: ../uC-CPU/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uC-LIB/%.o: ../uC-LIB/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uCOS-II/Ports/AVR32/UC3/AtmelStudio6/%.o: ../uCOS-II/Ports/AVR32/UC3/AtmelStudio6/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uCOS-II/Source/%.o: ../uCOS-II/Source/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -I"../APP" -I"../BSP" -I"../uCOS-II/Source" -I"../uCOS-II/Ports/AVR32/UC3/AtmelStudio6" -I"../uC-CPU" -I"../uC-CPU/AVR32/UC3/AtmelStudio6" -I"../uC-CPU/Cfg/Template" -I"../uC-LIB" -I"../uC-LIB/Cfg/Template"  -Os -ffunction-sections -masm-addr-pseudos -Wall -mpart=uc3a0512 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -289,63 +289,63 @@ uCOS-II/Source/%.o: ../uCOS-II/Source/%.c
 BSP/%.o: ../BSP/%.S
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 BSP/%.o: ../BSP/%.x
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 BSP/%.o: ../BSP/%.X
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uC-CPU/AVR32/UC3/AtmelStudio6/%.o: ../uC-CPU/AVR32/UC3/AtmelStudio6/%.S
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uC-CPU/AVR32/UC3/AtmelStudio6/%.o: ../uC-CPU/AVR32/UC3/AtmelStudio6/%.x
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uC-CPU/AVR32/UC3/AtmelStudio6/%.o: ../uC-CPU/AVR32/UC3/AtmelStudio6/%.X
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uCOS-II/Ports/AVR32/UC3/AtmelStudio6/%.o: ../uCOS-II/Ports/AVR32/UC3/AtmelStudio6/%.S
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uCOS-II/Ports/AVR32/UC3/AtmelStudio6/%.o: ../uCOS-II/Ports/AVR32/UC3/AtmelStudio6/%.x
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uCOS-II/Ports/AVR32/UC3/AtmelStudio6/%.o: ../uCOS-II/Ports/AVR32/UC3/AtmelStudio6/%.X
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc3a0512 -I "../BSP" -I "../uC-CPU/AVR32/UC3/AtmelStudio6" -I "../uCOS-II/Ports/AVR32/UC3/AtmelStudio6"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -370,13 +370,13 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR32/GNU Linker : 4.4.7
-	$(QUOTE)D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -nostartfiles -Wl,-Map="uCOS-II.map" -Wl,--start-group -lm  -Wl,--end-group -Wl,--gc-sections --rodata-writable -Wl,--direct-data -mpart=uc3a0512 -T ../BSP/link_newlib_uc3a0512.lds -Wl,-e,_trampoline  
+	$(QUOTE)D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -nostartfiles -Wl,-Map="uCOS-II.map" -Wl,--start-group -lm  -Wl,--end-group -Wl,--gc-sections --rodata-writable -Wl,--direct-data -mpart=uc3a0512 -T ../BSP/link_newlib_uc3a0512.lds -Wl,-e,_trampoline  
 	@echo Finished building target: $@
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature "uCOS-II.elf" "uCOS-II.hex"
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "uCOS-II.elf" "uCOS-II.eep" || exit 0
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objdump.exe" -h -S "uCOS-II.elf" > "uCOS-II.lss"
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "uCOS-II.elf" "uCOS-II.srec"
-	"D:\Windows Software\Atmel\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-size.exe" "uCOS-II.elf"
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature "uCOS-II.elf" "uCOS-II.hex"
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "uCOS-II.elf" "uCOS-II.eep" || exit 0
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objdump.exe" -h -S "uCOS-II.elf" > "uCOS-II.lss"
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "uCOS-II.elf" "uCOS-II.srec"
+	"D:\Software\Atmel Toolchain\AVR32 GCC\Native\3.4.1057\avr32-gnu-toolchain\bin\avr32-size.exe" "uCOS-II.elf"
 	
 	
 

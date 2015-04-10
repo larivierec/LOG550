@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.9.1"/>
+<title>Prototype 2 - LOG550:  Fichier source de app.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Prototype 2 - LOG550
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.9.1 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_ed186919a677015a01c5ad792232c0ce.html">uCOS-II</a></li><li class="navelem"><a class="el" href="dir_142a1dec975a0a36070a64bf325a7fee.html">APP</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">app.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="app_8c.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">        Fichier: app.c</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">        Auteur: Christopher Lariviere, Samy Lemcelli</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">        Date:   4/9/2015</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">/** @mainpage</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">&lt;center&gt;&lt;b&gt;Laboratoire de systemes informatiques en temps reel&lt;/b&gt;&lt;/center&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">@author &lt;ul&gt; &lt;li&gt; Christopher Lariviere &lt;li&gt;Samy Lemcelli &lt;/ul&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">@section MainSection1 Description</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">Le but du systeme sur le microcontroleur est de convertir le signal analogique</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">en donnees numeriques avec l&#39;ADC et de les transferer vers le PC par lien en serie soit en:</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">Le but du deuxieme laboratoire de LOG550 est identique a la premiere.\n</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">Nous n&#39;utilisons pas directement l&#39;ASF (Atmel Software Framework), nous utilisons plutot</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">un noyau uCOS-II qui interface avec le EVK1100</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">-</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">Vitesse de transfert utilisée</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">&lt;ul&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">&lt;li&gt; 115200 bauds (Bonus - USART0)&lt;/li&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">&lt;li&gt; 57600 bauds (ADC - USART1)&lt;/li&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">&lt;/ul&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">- &lt;b&gt;Logiciel necessaire&lt;/b&gt; : AVR-Studio 6.2, AVR-GCC, Oscilloscope JAVA, TeraTerminal PRO pour Bonus</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">- &lt;b&gt;Materiel necessaire&lt;/b&gt; : ATmega32 on EVK1100 board</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">- &lt;b&gt;Librairies/Modules necessaire&lt;/b&gt; :</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">&lt;ul&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">&lt;li&gt; uCOS-II de Microcium qui est inclut dans le fichier zip.</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">&lt;/ul&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">-</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">Specifications</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">&lt;ul&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">&lt;li&gt; 2 canaux operant 500 echantillons/sec</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">&lt;li&gt; Tout acces a une ressource partagee requiert un semaphore</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">&lt;li&gt; L&#39;utilisation d&#39;un FIFO fournis par le noyau uCOS-II</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">&lt;li&gt; 5 taches dont: LED_Flash, UART_Cmd_RX, UART_SendSample, ADC_Cmd(), Alarm_MsgQ</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">&lt;li&gt; 1 tache (boni): Bonus_Thread() qui s&#39;occupe d&#39;afficher en terminal de l&#39;utilisation CPU et Le nombre de context switch</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">&lt;/ul&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">@file app.c Contient le programme de LOG550 developpe par Christopher Lariviere et Samy Lemcelli</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include  &quot;includes.h&quot;</span>   <span class="comment">/**&lt;Ceci inclu os_cfg.h, config des services noyaux UCOS-II...*/</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="app_8c.html#af192cf810df45bf7e772a326736568b7">   49</a></span>&#160;<span class="preprocessor">#define LIGHT_CHANNEL                           2                       </span><span class="comment">/**&lt; Le numero du channel de la lumiere */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="app_8c.html#a96460a4dcbf2c7407733d4aff54b7b25">   50</a></span>&#160;<span class="preprocessor">#define POT_CHANNEL                                     1                       </span><span class="comment">/**&lt; Le numero du channel du potentiometre */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">/** Variables Globales */</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">        @brief defini le stack de chacun des taches</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="app_8c.html#a49945add268777aad7623f3f330d717e">   57</a></span>&#160;<span class="preprocessor">#define OS_TASK_STK_SIZE 512</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="app_8c.html#ad333c9a5e12fc0c1880b00486cd6f29b">   59</a></span>&#160;OS_STK  <a class="code" href="app_8c.html#ad333c9a5e12fc0c1880b00486cd6f29b">LED_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>];                                    <span class="comment">/**&lt; Declaration du stack LED_Stack */</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="app_8c.html#ab8682f5023f62cb2912bfdc301fd4aa4">   60</a></span>&#160;OS_STK  <a class="code" href="app_8c.html#ab8682f5023f62cb2912bfdc301fd4aa4">UART_RX_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>];                        <span class="comment">/**&lt; Declaration du stack UART_RX_Stack*/</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="app_8c.html#aba8d2f0322fac7710ffd85e3d75f63d6">   61</a></span>&#160;OS_STK  <a class="code" href="app_8c.html#aba8d2f0322fac7710ffd85e3d75f63d6">UART_TX_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>];                        <span class="comment">/**&lt; Declaration du stack UART_TX_Stack*/</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="app_8c.html#a0eacea3a9289ed14dae185886cae5634">   62</a></span>&#160;OS_STK  <a class="code" href="app_8c.html#a0eacea3a9289ed14dae185886cae5634">ADC_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>];                                    <span class="comment">/**&lt; Declaration du stack ADC_Stack*/</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="app_8c.html#aeb083247b535df557a72e40aa18ff79f">   63</a></span>&#160;OS_STK  <a class="code" href="app_8c.html#aeb083247b535df557a72e40aa18ff79f">Alarm_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>];                          <span class="comment">/**&lt; Declaration du stack Alarm_Stack*/</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="app_8c.html#ad68efa6ef7746f54d6b422eafb4bbeac">   64</a></span>&#160;OS_STK  <a class="code" href="app_8c.html#ad68efa6ef7746f54d6b422eafb4bbeac">Bonus_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>];                          <span class="comment">/**&lt; Declaration du stack Bonus_Stack*/</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">        @brief  La tache LED_flash qui toggle a chaque 100 ms -&gt; 200 ms pour un toggle complet</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a189ce878d2ab2dfd58f8d22a12c7789f">LED_flash</a>(<span class="keywordtype">void</span> *p_arg);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">        @brief gere la reception des donnes par l&#39;interface de communication USART</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#ac96e087dad4626194b01bbaebce9d1dc">UART_Cmd_RX</a>(<span class="keywordtype">void</span> *p_arg);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">        @brief Envoi le un sample du MessageQueue (ADCMsg) sur le USART1 a 57600 bauds</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a2913b8fe5629afbaf6c1c9bc7efd0407">UART_SendSample</a>(<span class="keywordtype">void</span> *p_arg);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">        @brief Converti un canal du adc lumiere OU potentiometre a chaque milliseconde</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a4932f68f570bcae92f0eb42dd7ceba79">ADC_Cmd</a>(<span class="keywordtype">void</span> *p_arg);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">        @brief Nous averti s&#39;il y a eu un depassement au niveau du ADC (ne devrait jamais se reveiller)</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a026c67e5b0a0fa6667f30202b099735f">Alarm_msgQ</a>(<span class="keywordtype">void</span> *p_arg);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">        @brief Nous affiche sur le USART0 a 115200 bauds l&#39;usage CPU et le nombre de context switch \n</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">        a chaque 500 ms</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a2b4345516bd9f1737d9dbe17089af97b">Bonus_Thread</a>(<span class="keywordtype">void</span> *p_arg);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">/**&lt;Semaphores */</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="app_8c.html#a2d57808277fdeeb885101588b2f10760">   99</a></span>&#160;<a class="code" href="structos__event.html">OS_EVENT</a>        *<a class="code" href="app_8c.html#a2d57808277fdeeb885101588b2f10760">Start_Sem</a>;             <span class="comment">/**&lt;Semaphore de debut de conversion */</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="app_8c.html#a3cc3197b1b66b9966c4ca5221429dfdd">  100</a></span>&#160;<a class="code" href="structos__event.html">OS_EVENT</a>        *<a class="code" href="app_8c.html#a3cc3197b1b66b9966c4ca5221429dfdd">UART_TX_Sem</a>;           <span class="comment">/**&lt;Semaphore de transmission UART1*/</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="app_8c.html#aa3842388fb2fe596bca483ca4ad00fd7">  101</a></span>&#160;<a class="code" href="structos__event.html">OS_EVENT</a>        *<a class="code" href="app_8c.html#aa3842388fb2fe596bca483ca4ad00fd7">Alarm_Sem</a>;             <span class="comment">/**&lt;Semaphore d&#39;alarm (qui ne devrait pas actionner)*/</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="app_8c.html#ad05edd8c1721ba1ea89c58191b32f2c7">  102</a></span>&#160;<a class="code" href="structos__event.html">OS_EVENT</a>        *<a class="code" href="app_8c.html#ad05edd8c1721ba1ea89c58191b32f2c7">LED1_Sem</a>;              <span class="comment">/**&lt;Semphore des LEDs*/</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="app_8c.html#a1f81952cb3027015657be10bf3e8ad2a">  103</a></span>&#160;<a class="code" href="structos__event.html">OS_EVENT</a>        *<a class="code" href="app_8c.html#a1f81952cb3027015657be10bf3e8ad2a">SEM_ADC_Alternate</a>      <span class="comment">/**&lt;Semaphore d&#39;alternance pour le ADC (canaux)*/</span>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="app_8c.html#a88fc1c1dcbce3b90f505adca8fc2fc06">  105</a></span>&#160;<a class="code" href="structos__event.html">OS_EVENT</a>        *<a class="code" href="app_8c.html#a88fc1c1dcbce3b90f505adca8fc2fc06">ADCMsg</a>;                <span class="comment">/**&lt;Semaphore pour MessageQueue pour ADC*/</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="app_8c.html#aef182ab60cb5d3ba60f13f4c75dce848">  107</a></span>&#160;<span class="keywordtype">void</span> *<a class="code" href="app_8c.html#aef182ab60cb5d3ba60f13f4c75dce848">ADCMsgFIFO</a>[4];            <span class="comment">/**&lt;MessageQueue pour l&#39;ADC (FIFO) */</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> <a class="code" href="app_8c.html#a9cb15159c84df66ad8d27ea093c0cd0f">Init_IO_Usager</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">        @brief  Point d&#39;entree pour le programme</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="app_8c.html#a840291bc02cba5474a4cb46a9b9566fe">  114</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="app_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;{</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        BSP_Init();         <span class="comment">/*Set le timer et demarre les ISR_TICKS.*/</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        CPU_IntDis();       <span class="comment">/*Desactive toute les interrupts pendant l&#39;initialisation  */</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        OSInit();           <span class="comment">/*Initialise &quot;uC/OS-II, The Real-Time Kernel&quot;              */</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <a class="code" href="app_8c.html#a9cb15159c84df66ad8d27ea093c0cd0f">Init_IO_Usager</a>();   <span class="comment">/*Initialisation des differents I/O par l&#39;usager                                    */</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="comment">/*Creation de toute les taches, a des priorites differentes (1&lt;prio&lt;25) */</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        OSTaskCreate(<a class="code" href="app_8c.html#a189ce878d2ab2dfd58f8d22a12c7789f">LED_flash</a>, NULL, (OS_STK *)&amp;<a class="code" href="app_8c.html#ad333c9a5e12fc0c1880b00486cd6f29b">LED_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>-1], 1);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        OSTaskCreate(<a class="code" href="app_8c.html#ac96e087dad4626194b01bbaebce9d1dc">UART_Cmd_RX</a>, NULL, (OS_STK *)&amp;<a class="code" href="app_8c.html#ab8682f5023f62cb2912bfdc301fd4aa4">UART_RX_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>-1], 2);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        OSTaskCreate(<a class="code" href="app_8c.html#a2913b8fe5629afbaf6c1c9bc7efd0407">UART_SendSample</a>, NULL, (OS_STK *)&amp;<a class="code" href="app_8c.html#aba8d2f0322fac7710ffd85e3d75f63d6">UART_TX_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>-1], 3);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        OSTaskCreate(<a class="code" href="app_8c.html#a4932f68f570bcae92f0eb42dd7ceba79">ADC_Cmd</a>, NULL, (OS_STK *)&amp;<a class="code" href="app_8c.html#a0eacea3a9289ed14dae185886cae5634">ADC_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>-1], 4);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        OSTaskCreate(<a class="code" href="app_8c.html#a026c67e5b0a0fa6667f30202b099735f">Alarm_msgQ</a>, NULL,(OS_STK *)&amp;<a class="code" href="app_8c.html#aeb083247b535df557a72e40aa18ff79f">Alarm_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>-1], 5);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        OSTaskCreate(<a class="code" href="app_8c.html#a2b4345516bd9f1737d9dbe17089af97b">Bonus_Thread</a>, NULL,(OS_STK *)&amp;<a class="code" href="app_8c.html#ad68efa6ef7746f54d6b422eafb4bbeac">Bonus_Stack</a>[<a class="code" href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a>-1], 6);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        Start_Sem   = OSSemCreate(0);                           <span class="comment">/*Creation du semaphore Start_Sem*/</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        UART_TX_Sem = OSSemCreate(0);                           <span class="comment">/*Creation du semaphore UART_TX_Sem*/</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        Alarm_Sem = OSSemCreate(0);                                     <span class="comment">/*Creation du semaphore Alarm_Sem*/</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        LED1_Sem = OSSemCreate(0);                                      <span class="comment">/*Creation du semaphore LED1_Sem*/</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        SEM_ADC_Alternate = OSSemCreate(0);     <span class="comment">/*Creation du semaphore SEM_ADC_Alternate*/</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        ADCMsg = OSQCreate(<a class="code" href="app_8c.html#aef182ab60cb5d3ba60f13f4c75dce848">ADCMsgFIFO</a>, 4);      <span class="comment">/*Creation du message queue de taille 4 ADCMsg */</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        OSStart();</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordflow">return</span> (0);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="app_8c.html#a189ce878d2ab2dfd58f8d22a12c7789f">  142</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a189ce878d2ab2dfd58f8d22a12c7789f">LED_flash</a> (<span class="keywordtype">void</span> *p_arg)</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;{</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        (void)p_arg;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        CPU_INT08U   err, MsgQDataRX;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        OSStatInit();</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordflow">while</span> (1) {</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                LED_Toggle(1);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                <span class="keywordflow">if</span>(LED1_Sem-&gt;OSEventCnt == 1) <span class="comment">// Have to track LED1 state. It was done by LED.h in old lab.</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                        OSSemSet(LED1_Sem,0,NULL);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                }</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                {</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                        OSSemSet(LED1_Sem,1,NULL);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                <span class="keywordflow">if</span>(Start_Sem-&gt;OSEventCnt == 1)</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                {</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                        LED_Toggle(2);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                }</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                OSTimeDly(100);<span class="comment">// 200ms == 5 fois secondes</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        }</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;}</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno"><a class="line" href="app_8c.html#ac96e087dad4626194b01bbaebce9d1dc">  170</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#ac96e087dad4626194b01bbaebce9d1dc">UART_Cmd_RX</a> (<span class="keywordtype">void</span> *p_arg)</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;{</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        (void)p_arg;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordtype">char</span> MboxDataRX;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordflow">while</span> (1) {</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                MboxDataRX=BSP_USART_ByteRd(1); <span class="comment">// Read from USART1</span></div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                <span class="keywordflow">if</span>(MboxDataRX == <span class="charliteral">&#39;s&#39;</span>){</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                        OSSemSet(Start_Sem,1,NULL);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                        (LED1_Sem-&gt;OSEventCnt == 1) ? LED_On(2) : LED_Off(2);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                <span class="keywordflow">if</span>(MboxDataRX ==<span class="charliteral">&#39;x&#39;</span>){</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                        OSSemSet(Start_Sem,0,NULL);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                        LED_Off(2);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                }</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                OSTimeDly(200); <span class="comment">// Shouldn&#39;t spam check so delay</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        }</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;}</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00191"></a><span class="lineno"><a class="line" href="app_8c.html#a2b4345516bd9f1737d9dbe17089af97b">  191</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a2b4345516bd9f1737d9dbe17089af97b">Bonus_Thread</a>(<span class="keywordtype">void</span> *p_arg)</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;{</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        (void)p_arg;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        <span class="keywordtype">char</span> buffer[8];</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <span class="keywordflow">while</span>(1)</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        {</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                OSTimeDly(500);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                BSP_USART_printf(0, <span class="stringliteral">&quot;\033[2J&quot;</span>);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                BSP_USART_printf(0, <span class="stringliteral">&quot;\033[2H&quot;</span>);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                BSP_USART_printf(0, <span class="stringliteral">&quot;\033[2H&quot;</span>);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                snprintf(buffer, 8, <span class="stringliteral">&quot;%d&quot;</span>, OSCPUUsage);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                BSP_USART_printf(0, <span class="stringliteral">&quot;CPU Usage Percentage : &quot;</span>);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;                BSP_USART_printf(0, buffer);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;                BSP_USART_printf(0, <span class="stringliteral">&quot;\033[2H\n&quot;</span>);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                BSP_USART_printf(0, <span class="stringliteral">&quot;Number of Context Switches: &quot;</span>);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                snprintf(buffer, 8, <span class="stringliteral">&quot;%d&quot;</span>, OSCtxSwCtr);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                OSCtxSwCtr = 0;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                BSP_USART_printf(0, buffer);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                BSP_USART_printf(0, <span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        }</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;}</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno"><a class="line" href="app_8c.html#a2913b8fe5629afbaf6c1c9bc7efd0407">  214</a></span>&#160;<span class="keyword">static</span>  <span class="keywordtype">void</span>  <a class="code" href="app_8c.html#a2913b8fe5629afbaf6c1c9bc7efd0407">UART_SendSample</a> (<span class="keywordtype">void</span> *p_arg)</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;{</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        (void)p_arg;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        CPU_INT08U MsgQDataRX;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordflow">while</span> (1) {</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                CPU_INT08U MsgQDataRX = (CPU_INT08U)OSQPend(ADCMsg, 0, NULL);<span class="comment">// Attend le MessageQueue</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                BSP_USART_ByteWr(1, MsgQDataRX);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        }</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;}</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
+<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="app_8c.html#a4932f68f570bcae92f0eb42dd7ceba79">  225</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a4932f68f570bcae92f0eb42dd7ceba79">ADC_Cmd</a> (<span class="keywordtype">void</span> *p_arg)</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;{</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        (void)p_arg;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <span class="keywordflow">while</span> (1) {</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;                <span class="keywordflow">if</span>(ADCMsg-&gt;OSEventCnt &gt;= 4)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                {</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                        OSSemPost(Alarm_Sem);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                <span class="keywordflow">if</span>(Start_Sem-&gt;OSEventCnt == 1)</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;                {</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;                        AVR32_ADC.cr = AVR32_ADC_START_MASK; <span class="comment">// starts the ADC Conversion</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;                         <span class="comment">// This is just to get a visual queue. Must delete.</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;                        CPU_INT32U statusRegister = AVR32_ADC.sr;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;                        <span class="keywordflow">if</span>((statusRegister &amp; AVR32_ADC_IER_EOC1_MASK) &amp;&amp; SEM_ADC_Alternate-&gt;OSEventCnt == 0)</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;                        {</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;                                OSSemSet(SEM_ADC_Alternate,1,NULL);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                                OSQPost(ADCMsg, (AVR32_ADC.cdr1 | 0x01));</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;                        }</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;                        <span class="keywordflow">if</span>((statusRegister &amp; AVR32_ADC_IER_EOC2_MASK) &amp;&amp; SEM_ADC_Alternate-&gt;OSEventCnt == 1)</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;                        {</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                                OSSemSet(SEM_ADC_Alternate,0,NULL);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                                OSQPost(ADCMsg, (AVR32_ADC.cdr2 &amp; ~0x01));</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                        }</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                }</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                OSTimeDly(1);        <span class="comment">// Delai en TICKS (1 TICKS=1milisec)</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        }</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;}</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
+<div class="line"><a name="l00256"></a><span class="lineno"><a class="line" href="app_8c.html#a026c67e5b0a0fa6667f30202b099735f">  256</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="app_8c.html#a026c67e5b0a0fa6667f30202b099735f">Alarm_msgQ</a>(<span class="keywordtype">void</span> *p_arg){</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        (void)p_arg;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        OSSemPend(Alarm_Sem,0,NULL);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        LED_Toggle(3);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;}</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="comment">        @brief Initialise les GPIO pour l&#39;usager</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
+<div class="line"><a name="l00266"></a><span class="lineno"><a class="line" href="app_8c.html#a9cb15159c84df66ad8d27ea093c0cd0f">  266</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="app_8c.html#a9cb15159c84df66ad8d27ea093c0cd0f">Init_IO_Usager</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;{</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        BSP_USART_Init(1,57600) ; <span class="comment">//Initialise USART1 at 57600bauds</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        BSP_USART_Init(0,115200) ; <span class="comment">//Initialise USART0 at 115200 bauds pour le bonus</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        BSP_USART_printf(1, <span class="stringliteral">&quot;\nPrototype 2 : LOG550\n Samy Lemcelli, Christopher Lariviere&quot;</span>);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        AVR32_ADC.mr |= 1 &lt;&lt; AVR32_ADC_LOWRES_OFFSET;   <span class="comment">//initialize the ADC to convert using only 8-bits</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        AVR32_ADC.cher = 1 &lt;&lt; <a class="code" href="app_8c.html#af192cf810df45bf7e772a326736568b7">LIGHT_CHANNEL</a>; <span class="comment">//Enable the Light Sensor</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        AVR32_ADC.cher = 1 &lt;&lt; <a class="code" href="app_8c.html#a96460a4dcbf2c7407733d4aff54b7b25">POT_CHANNEL</a>;      <span class="comment">//Enable the potentiometer</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;}</div>
+<div class="ttc" id="app_8c_html_a9cb15159c84df66ad8d27ea093c0cd0f"><div class="ttname"><a href="app_8c.html#a9cb15159c84df66ad8d27ea093c0cd0f">Init_IO_Usager</a></div><div class="ttdeci">void Init_IO_Usager(void)</div><div class="ttdoc">Initialise les GPIO pour l&#39;usager. </div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00266">app.c:266</a></div></div>
+<div class="ttc" id="app_8c_html_ad68efa6ef7746f54d6b422eafb4bbeac"><div class="ttname"><a href="app_8c.html#ad68efa6ef7746f54d6b422eafb4bbeac">Bonus_Stack</a></div><div class="ttdeci">OS_STK Bonus_Stack[OS_TASK_STK_SIZE]</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00064">app.c:64</a></div></div>
+<div class="ttc" id="app_8c_html_a0eacea3a9289ed14dae185886cae5634"><div class="ttname"><a href="app_8c.html#a0eacea3a9289ed14dae185886cae5634">ADC_Stack</a></div><div class="ttdeci">OS_STK ADC_Stack[OS_TASK_STK_SIZE]</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00062">app.c:62</a></div></div>
+<div class="ttc" id="app_8c_html_ad05edd8c1721ba1ea89c58191b32f2c7"><div class="ttname"><a href="app_8c.html#ad05edd8c1721ba1ea89c58191b32f2c7">LED1_Sem</a></div><div class="ttdeci">OS_EVENT * LED1_Sem</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00102">app.c:102</a></div></div>
+<div class="ttc" id="app_8c_html_a189ce878d2ab2dfd58f8d22a12c7789f"><div class="ttname"><a href="app_8c.html#a189ce878d2ab2dfd58f8d22a12c7789f">LED_flash</a></div><div class="ttdeci">static void LED_flash(void *p_arg)</div><div class="ttdoc">La tache LED_flash qui toggle a chaque 100 ms -> 200 ms pour un toggle complet. </div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00142">app.c:142</a></div></div>
+<div class="ttc" id="app_8c_html_a2b4345516bd9f1737d9dbe17089af97b"><div class="ttname"><a href="app_8c.html#a2b4345516bd9f1737d9dbe17089af97b">Bonus_Thread</a></div><div class="ttdeci">static void Bonus_Thread(void *p_arg)</div><div class="ttdoc">Nous affiche sur le USART0 a 115200 bauds l&#39;usage CPU et le nombre de context switch  a chaque 500 ms...</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00191">app.c:191</a></div></div>
+<div class="ttc" id="app_8c_html_a840291bc02cba5474a4cb46a9b9566fe"><div class="ttname"><a href="app_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a></div><div class="ttdeci">int main(void)</div><div class="ttdoc">Point d&#39;entree pour le programme. </div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00114">app.c:114</a></div></div>
+<div class="ttc" id="app_8c_html_aeb083247b535df557a72e40aa18ff79f"><div class="ttname"><a href="app_8c.html#aeb083247b535df557a72e40aa18ff79f">Alarm_Stack</a></div><div class="ttdeci">OS_STK Alarm_Stack[OS_TASK_STK_SIZE]</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00063">app.c:63</a></div></div>
+<div class="ttc" id="app_8c_html_ad333c9a5e12fc0c1880b00486cd6f29b"><div class="ttname"><a href="app_8c.html#ad333c9a5e12fc0c1880b00486cd6f29b">LED_Stack</a></div><div class="ttdeci">OS_STK LED_Stack[OS_TASK_STK_SIZE]</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00059">app.c:59</a></div></div>
+<div class="ttc" id="app_8c_html_a2d57808277fdeeb885101588b2f10760"><div class="ttname"><a href="app_8c.html#a2d57808277fdeeb885101588b2f10760">Start_Sem</a></div><div class="ttdeci">OS_EVENT * Start_Sem</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00099">app.c:99</a></div></div>
+<div class="ttc" id="app_8c_html_a3cc3197b1b66b9966c4ca5221429dfdd"><div class="ttname"><a href="app_8c.html#a3cc3197b1b66b9966c4ca5221429dfdd">UART_TX_Sem</a></div><div class="ttdeci">OS_EVENT * UART_TX_Sem</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00100">app.c:100</a></div></div>
+<div class="ttc" id="app_8c_html_a026c67e5b0a0fa6667f30202b099735f"><div class="ttname"><a href="app_8c.html#a026c67e5b0a0fa6667f30202b099735f">Alarm_msgQ</a></div><div class="ttdeci">static void Alarm_msgQ(void *p_arg)</div><div class="ttdoc">Nous averti s&#39;il y a eu un depassement au niveau du ADC (ne devrait jamais se reveiller) ...</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00256">app.c:256</a></div></div>
+<div class="ttc" id="app_8c_html_aef182ab60cb5d3ba60f13f4c75dce848"><div class="ttname"><a href="app_8c.html#aef182ab60cb5d3ba60f13f4c75dce848">ADCMsgFIFO</a></div><div class="ttdeci">void * ADCMsgFIFO[4]</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00107">app.c:107</a></div></div>
+<div class="ttc" id="app_8c_html_aa3842388fb2fe596bca483ca4ad00fd7"><div class="ttname"><a href="app_8c.html#aa3842388fb2fe596bca483ca4ad00fd7">Alarm_Sem</a></div><div class="ttdeci">OS_EVENT * Alarm_Sem</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00101">app.c:101</a></div></div>
+<div class="ttc" id="app_8c_html_a96460a4dcbf2c7407733d4aff54b7b25"><div class="ttname"><a href="app_8c.html#a96460a4dcbf2c7407733d4aff54b7b25">POT_CHANNEL</a></div><div class="ttdeci">#define POT_CHANNEL</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00050">app.c:50</a></div></div>
+<div class="ttc" id="app_8c_html_a49945add268777aad7623f3f330d717e"><div class="ttname"><a href="app_8c.html#a49945add268777aad7623f3f330d717e">OS_TASK_STK_SIZE</a></div><div class="ttdeci">#define OS_TASK_STK_SIZE</div><div class="ttdoc">defini le stack de chacun des taches </div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00057">app.c:57</a></div></div>
+<div class="ttc" id="app_8c_html_a1f81952cb3027015657be10bf3e8ad2a"><div class="ttname"><a href="app_8c.html#a1f81952cb3027015657be10bf3e8ad2a">SEM_ADC_Alternate</a></div><div class="ttdeci">OS_EVENT * SEM_ADC_Alternate</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00103">app.c:103</a></div></div>
+<div class="ttc" id="app_8c_html_af192cf810df45bf7e772a326736568b7"><div class="ttname"><a href="app_8c.html#af192cf810df45bf7e772a326736568b7">LIGHT_CHANNEL</a></div><div class="ttdeci">#define LIGHT_CHANNEL</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00049">app.c:49</a></div></div>
+<div class="ttc" id="app_8c_html_a88fc1c1dcbce3b90f505adca8fc2fc06"><div class="ttname"><a href="app_8c.html#a88fc1c1dcbce3b90f505adca8fc2fc06">ADCMsg</a></div><div class="ttdeci">OS_EVENT * ADCMsg</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00105">app.c:105</a></div></div>
+<div class="ttc" id="app_8c_html_a2913b8fe5629afbaf6c1c9bc7efd0407"><div class="ttname"><a href="app_8c.html#a2913b8fe5629afbaf6c1c9bc7efd0407">UART_SendSample</a></div><div class="ttdeci">static void UART_SendSample(void *p_arg)</div><div class="ttdoc">Envoi le un sample du MessageQueue (ADCMsg) sur le USART1 a 57600 bauds. </div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00214">app.c:214</a></div></div>
+<div class="ttc" id="structos__event_html"><div class="ttname"><a href="structos__event.html">os_event</a></div><div class="ttdef"><b>Definition:</b> <a href="ucos__ii_8h_source.html#l00376">ucos_ii.h:376</a></div></div>
+<div class="ttc" id="app_8c_html_aba8d2f0322fac7710ffd85e3d75f63d6"><div class="ttname"><a href="app_8c.html#aba8d2f0322fac7710ffd85e3d75f63d6">UART_TX_Stack</a></div><div class="ttdeci">OS_STK UART_TX_Stack[OS_TASK_STK_SIZE]</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00061">app.c:61</a></div></div>
+<div class="ttc" id="app_8c_html_a4932f68f570bcae92f0eb42dd7ceba79"><div class="ttname"><a href="app_8c.html#a4932f68f570bcae92f0eb42dd7ceba79">ADC_Cmd</a></div><div class="ttdeci">static void ADC_Cmd(void *p_arg)</div><div class="ttdoc">Converti un canal du adc lumiere OU potentiometre a chaque milliseconde. </div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00225">app.c:225</a></div></div>
+<div class="ttc" id="app_8c_html_ac96e087dad4626194b01bbaebce9d1dc"><div class="ttname"><a href="app_8c.html#ac96e087dad4626194b01bbaebce9d1dc">UART_Cmd_RX</a></div><div class="ttdeci">static void UART_Cmd_RX(void *p_arg)</div><div class="ttdoc">gere la reception des donnes par l&#39;interface de communication USART </div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00170">app.c:170</a></div></div>
+<div class="ttc" id="app_8c_html_ab8682f5023f62cb2912bfdc301fd4aa4"><div class="ttname"><a href="app_8c.html#ab8682f5023f62cb2912bfdc301fd4aa4">UART_RX_Stack</a></div><div class="ttdeci">OS_STK UART_RX_Stack[OS_TASK_STK_SIZE]</div><div class="ttdef"><b>Definition:</b> <a href="app_8c_source.html#l00060">app.c:60</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Jeudi 9 Avril 2015 19:57:34 pour Prototype 2 - LOG550 par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.9.1
+</small></address>
+</body>
+</html>

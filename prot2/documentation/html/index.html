@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.9.1"/>
+<title>Prototype 2 - LOG550: Page principale</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Prototype 2 - LOG550
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.9.1 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Prototype 2 - LOG550 Documentation</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>Fichier: <a class="el" href="app_8c.html">app.c</a> Auteur: Christopher Lariviere, Samy Lemcelli Date: 4/9/2015 </p><center><b>Laboratoire de systemes informatiques en temps reel</b></center><dl class="section author"><dt>Auteur</dt><dd><ul>
+<li>
+Christopher Lariviere </li>
+<li>
+Samy Lemcelli </li>
+</ul>
+</dd></dl>
+<h1><a class="anchor" id="MainSection1"></a>
+Description</h1>
+<p>Le but du systeme sur le microcontroleur est de convertir le signal analogique en donnees numeriques avec l'ADC et de les transferer vers le PC par lien en serie soit en:</p>
+<p>Le but du deuxieme laboratoire de LOG550 est identique a la premiere.<br />
+Nous n'utilisons pas directement l'ASF (Atmel Software Framework), nous utilisons plutot un noyau uCOS-II qui interface avec le EVK1100</p>
+<ul>
+<li>Vitesse de transfert utilisée <ul>
+<li>
+115200 bauds (Bonus - USART0) </li>
+<li>
+57600 bauds (ADC - USART1) </li>
+</ul>
+</li>
+<li><b>Logiciel necessaire</b> : AVR-Studio 6.2, AVR-GCC, Oscilloscope JAVA, TeraTerminal PRO pour Bonus</li>
+<li><b>Materiel necessaire</b> : ATmega32 on EVK1100 board</li>
+<li><b>Librairies/Modules necessaire</b> : <ul>
+<li>
+uCOS-II de Microcium qui est inclut dans le fichier zip. </li>
+</ul>
+</li>
+<li>Specifications <ul>
+<li>
+2 canaux operant 500 echantillons/sec </li>
+<li>
+Tout acces a une ressource partagee requiert un semaphore </li>
+<li>
+L'utilisation d'un FIFO fournis par le noyau uCOS-II </li>
+<li>
+5 taches dont: LED_Flash, UART_Cmd_RX, UART_SendSample, <a class="el" href="app_8c.html#a4932f68f570bcae92f0eb42dd7ceba79" title="Converti un canal du adc lumiere OU potentiometre a chaque milliseconde. ">ADC_Cmd()</a>, Alarm_MsgQ </li>
+<li>
+1 tache (boni): <a class="el" href="app_8c.html#a2b4345516bd9f1737d9dbe17089af97b" title="Nous affiche sur le USART0 a 115200 bauds l&#39;usage CPU et le nombre de context switch  a chaque 500 ms...">Bonus_Thread()</a> qui s'occupe d'afficher en terminal de l'utilisation CPU et Le nombre de context switch </li>
+</ul>
+</li>
+</ul>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Jeudi 9 Avril 2015 19:57:34 pour Prototype 2 - LOG550 par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.9.1
+</small></address>
+</body>
+</html>
